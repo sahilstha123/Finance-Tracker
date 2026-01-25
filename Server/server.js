@@ -1,9 +1,10 @@
 const express = require("express")
 const app = express()
-
-app.get("/",(req,res)=>{
+const PORT = process.env.PORT || 8000
+app.get("/", (req, res) => {
     res.status(200).send("Server is running yaya ")
 })
-app.listen(5000,()=>{
-    console.log("Server is running on port 5000")
+app.listen(PORT, (error) => {
+    error ? console.log(error) :
+        console.log("Server is running on port 8000")
 })
