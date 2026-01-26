@@ -2,8 +2,9 @@ const express = require("express")
 const errorHandler = require("./middleware/errorMiddleware")
 const userRouter = require("./routers/userRouter")
 const app = express()
+const connectDB = require("./config/dbconfig")
 const PORT = process.env.PORT || 8000
-
+connectDB()
 app.use(express.json())
 app.get("/", (req, res) => {
     res.status(200).send("Server is running yaya ")
