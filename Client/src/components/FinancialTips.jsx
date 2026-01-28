@@ -16,7 +16,7 @@ const FinancialTips = () => {
             {tip && (
                 <>
                     <h5>{tip.tip}</h5>
-                    <p className='fw-bolder'>"{tip.quote}"</p>
+                    <p className='fw-bolder mb-0'>"{tip.quote}"</p>
                     <strong>-{tip.author}</strong>
                 </>
             )}
