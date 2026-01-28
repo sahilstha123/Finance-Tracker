@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
         unique: true,
         index: 1,
         trim: true,
+        lowercase: true,
     },
     password: {
         type: String,
@@ -18,8 +19,8 @@ const userSchema = new mongoose.Schema({
         trim: true,
 
     }
-},{timestamps:true})
+}, { timestamps: true })
 
-const UserCollection = mongoose.model("User",userSchema)
+const UserCollection = mongoose.model("User", userSchema)
 
 module.exports = UserCollection

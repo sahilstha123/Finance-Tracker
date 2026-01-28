@@ -7,3 +7,7 @@ exports.insertUser = (userData)=>{
 exports.AllUsers = ()=>{
     return userSchema.find()
 }
+
+exports.findUserByEmail = (email)=>{
+    return userSchema.findOne({email})
+}
