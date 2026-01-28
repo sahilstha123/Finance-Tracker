@@ -1,4 +1,4 @@
-const { insertUser, AllUsers,findUserByEmail } = require("../models/user/UserModel");
+const { insertUser, AllUsers, findUserByEmail } = require("../models/user/UserModel");
 const { hasPassword } = require("../utils/bcrypt");
 
 exports.getUser = async (req, res) => {
@@ -15,10 +15,10 @@ exports.createUser = async (req, res) => {
   const existingUser = await findUserByEmail(email)
 
   // email and password are required
-  if(!email || !password){
+  if (!email || !password) {
     return res.status(400).json({
-      status:"error",
-      message:"Email and Password are required"
+      status: "error",
+      message: "Email and Password are required"
     })
   }
 
@@ -30,7 +30,7 @@ exports.createUser = async (req, res) => {
     })
   }
 
-// hasing password
+  // hasing password
   const hashPass = await hasPassword(password)
   const user = await insertUser({
     ...req.body
