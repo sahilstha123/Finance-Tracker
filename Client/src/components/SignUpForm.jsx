@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import CustomInput from './CustomInput';
 import { toast } from "react-toastify";
+import { postNewUser } from '../helpers/axioHelper';
 
 const SignUpForm = () => {
   const [form, setForm] = useState({});
@@ -16,7 +17,7 @@ const SignUpForm = () => {
     }));
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     const { confirmPassword, ...rest } = form;
     if (confirmPassword !== form.password) {
@@ -25,8 +26,37 @@ const SignUpForm = () => {
         style: { color: "red" }
       });
     }
-    setForm({});
-    console.log(form);
+    try {
+      // const data = await postNewUser(rest)
+      // setForm({})
+      // console.log(data)
+      const { status, message } = await postNewUser(rest)
+      if (status === "success") {
+        toast.success(message, {
+          autoClose: 3000,
+          style: { color: "green" }
+        })
+        setForm({})
+      }
+      else
+      {
+        toast.error(message || "something went wrong", {
+          autoClose: 3000,
+          style: { color: "red" }
+        })
+      }
+
+    }
+    catch (error) {
+      // Catch any unexpected errors
+      toast.error(error.message || "Something went wrong", {
+        autoClose: 3000,
+        style: { color: "red" },
+      });
+      console.error(error);
+    }
+
+
   };
 
   const field = [
@@ -66,11 +96,11 @@ const SignUpForm = () => {
         <Card.Title className="text-center text-success">Create Your Account</Card.Title>
         <Form onSubmit={handleOnSubmit}>
           {field.map((items) => (
-            <CustomInput 
-              key={items.label} 
+            <CustomInput
+              key={items.label}
               {...items}
               onChange={handleOnChange}
-              value={form?.[items.name] || ""} 
+              value={form?.[items.name] || ""}
             />
           ))}
           <Button variant="success" type="submit" className="w-100 mb-3">
