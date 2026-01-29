@@ -7,7 +7,7 @@ import SignUpForm from '../components/SignUpForm';
 const SignUp = () => {
   return (
 
-    <Container className="p-5">
+    <Container className="p-1 p-md-4">
       <Row className="SignupBg mx-auto g-0 ">
         <Col
           xs={12}

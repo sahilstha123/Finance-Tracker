@@ -23,7 +23,8 @@ const SignUpForm = () => {
     if (confirmPassword !== form.password) {
       return toast.error("Password do not match", {
         autoClose: 3000,
-        style: { color: "red" }
+        style: { color: "red" },
+        className: "toast-mobile"
       });
     }
     try {
@@ -34,7 +35,9 @@ const SignUpForm = () => {
       if (status === "success") {
         toast.success(message, {
           autoClose: 3000,
-          style: { color: "green" }
+          style: { color: "green" },
+        className: "toast-mobile"
+
         })
         setForm({})
       }
@@ -42,7 +45,9 @@ const SignUpForm = () => {
       {
         toast.error(message || "something went wrong", {
           autoClose: 3000,
-          style: { color: "red" }
+          style: { color: "red" },
+        className: "toast-mobile"
+
         })
       }
 
@@ -52,6 +57,8 @@ const SignUpForm = () => {
       toast.error(error.message || "Something went wrong", {
         autoClose: 3000,
         style: { color: "red" },
+        className: "toast-mobile"
+
       });
       console.error(error);
     }
