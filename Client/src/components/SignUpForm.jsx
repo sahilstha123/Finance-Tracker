@@ -3,32 +3,32 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import CustomInput from './CustomInput';
-import { toast} from "react-toastify"
+import { toast } from "react-toastify";
 
 const SignUpForm = () => {
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState({});
 
-  
   const handleOnChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setForm(prev => ({
       ...prev,
       [name]: value
-    }))
-  }
+    }));
+  };
 
   const handleOnSubmit = (e) => {
-    e.preventDefault()
-    const {confirmPassword, ...rest} = form
-    if(confirmPassword!==form.password){
-      return toast.error("Password donot match",{autoClose:3000, style:{
-        color:"red"
-      }})
+    e.preventDefault();
+    const { confirmPassword, ...rest } = form;
+    if (confirmPassword !== form.password) {
+      return toast.error("Password do not match", {
+        autoClose: 3000,
+        style: { color: "red" }
+      });
     }
-    setForm({})
-    console.log(form)
+    setForm({});
+    console.log(form);
+  };
 
-  }
   const field = [
     {
       label: "Name",
@@ -58,26 +58,31 @@ const SignUpForm = () => {
       placeholder: "********",
       controlId: "formBasicConfirmPassword"
     },
-  ]
+  ];
+
   return (
-    <Card className='p-2 md-p-4 shadow-sm w-100 signup-card'>
+    <Card className="w-100 h-100 shadow-sm signup-card border-0">
       <Card.Body>
-        <Card.Title className="text-center text-primary">Create Your Account</Card.Title>
+        <Card.Title className="text-center text-success">Create Your Account</Card.Title>
         <Form onSubmit={handleOnSubmit}>
-          {field.map((items) => <CustomInput key={items.label} {...items}
-            onChange={handleOnChange}
-            value={form?.[items.name] || ""} />)}
-          <Button variant='primary' type="submit" className="w-100 mb-3">
+          {field.map((items) => (
+            <CustomInput 
+              key={items.label} 
+              {...items}
+              onChange={handleOnChange}
+              value={form?.[items.name] || ""} 
+            />
+          ))}
+          <Button variant="success" type="submit" className="w-100 mb-3">
             SignUp
           </Button>
-
-          <div className='text-center'>
+          <div className="text-center">
             Already have an account ? <a href="/">Login</a>
           </div>
         </Form>
       </Card.Body>
     </Card>
   );
-}
+};
 
 export default SignUpForm;

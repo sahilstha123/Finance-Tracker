@@ -6,14 +6,28 @@ import FinancialTips from '../components/FinancialTips';
 import SignUpForm from '../components/SignUpForm';
 const SignUp = () => {
   return (
-    
-      <Container className='p-5'>
-        <Row className = "SignupBg p-3 rounded-3 mx-auto">
-          <Col xs={12} md={6}className='d-flex align-items-center justify-content-center mb-3 mb-md-0'><FinancialTips /></Col>
-          <Col xs={12} md={6} className='d-flex align-items-center justify-content-center'><SignUpForm /></Col>
-        </Row>
-      </Container>
-    
+
+    <Container className="p-5">
+      <Row className="SignupBg mx-auto g-0 ">
+        <Col
+          xs={12}
+          md={6}
+          className="d-flex align-items-center justify-content-center p-3"
+        >
+          <FinancialTips />
+        </Col>
+
+        <Col
+          xs={12}
+          md={6}
+          className="d-flex align-items-center justify-content-center p-0"
+        >
+          <SignUpForm />
+        </Col>
+      </Row>
+    </Container>
+
+
   )
 }
 

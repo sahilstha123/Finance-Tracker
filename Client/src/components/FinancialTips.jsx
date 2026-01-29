@@ -1,27 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import financialTips from "../utils/financialTips.js"
+import React, { useEffect, useState } from "react";
+import financialTips from "../utils/financialTips.js";
+
 const FinancialTips = () => {
-    const [tip, setTips] = useState(financialTips[0]);
+  const [tipIndex, setTipIndex] = useState(0);
+  const [slideUp, setSlideUp] = useState(true);
 
-    useEffect(() => {
-       const intervalId =  setInterval(() => {
-            const randomIndex = Math.floor(Math.random() * financialTips.length)
-            setTips(financialTips[randomIndex])
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * financialTips.length);
+      setTipIndex(randomIndex);
+      setSlideUp(prev => !prev);
+    }, 3000);
 
-        }, 3000)
-        return ()=>clearInterval(intervalId)
-    }, [])
-    return (
-        <div>
-            {tip && (
-                <>
-                    <h5>{tip.tip}</h5>
-                    <p className='fw-bolder mb-0'>"{tip.quote}"</p>
-                    <strong>-{tip.author}</strong>
-                </>
-            )}
-        </div>
-    )
-}
+    return () => clearInterval(intervalId);
+  }, []);
 
-export default FinancialTips
+  const tip = financialTips[tipIndex];
+
+  return (
+    <div
+      key={tipIndex}
+      className={`financial-tips ${slideUp ? "slide-up" : "slide-down"} p-4 text-white`}
+    >
+      <p className="fw-bold mb-1">"{tip.quote}"</p>
+      <strong>- {tip.author}</strong>
+    </div>
+  );
+};
+
+export default FinancialTips;
