@@ -95,6 +95,7 @@ const SignUpForm = () => {
       placeholder: "********",
       controlId: "formBasicConfirmPassword"
     },
+   
   ];
 
   return (
