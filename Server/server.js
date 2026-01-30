@@ -2,6 +2,8 @@ const express = require("express")
 const errorHandler = require("./middleware/errorMiddleware")
 const userRouter = require("./routers/userRouter")
 const app = express()
+const cors = require("cors")
+app.use(cors())
 const connectDB = require("./config/dbconfig")
 const PORT = process.env.PORT || 8000
 connectDB()
