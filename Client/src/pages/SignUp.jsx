@@ -2,8 +2,8 @@ import React from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import FinancialTips from '../components/FinancialTips';
-import SignUpForm from '../components/SignUpForm';
+import SignUpForm from '../components/signup/SignUpForm';
+import FinancialTips from '../components/signup/FinancialTips';
 const SignUp = () => {
   return (
 

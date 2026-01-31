@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import financialTips from "../utils/financialTips.js";
-
+import financialTips from "../../utils/financialTips.js";
+import "./financialTips.css"
 const FinancialTips = () => {
   const [tipIndex, setTipIndex] = useState(0);
   const [slideUp, setSlideUp] = useState(true);

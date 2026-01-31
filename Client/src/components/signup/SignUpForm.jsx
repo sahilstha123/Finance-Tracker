@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import "./signup.css"
 import CustomInput from './CustomInput';
 import { toast } from "react-toastify";
-import { postNewUser } from '../helpers/axioHelper';
+import { postNewUser } from '../../helpers/axioHelper';
 
 const SignUpForm = () => {
   const [form, setForm] = useState({});

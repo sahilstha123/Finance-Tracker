@@ -1,0 +1,57 @@
+.financial-tips {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    min-height: 150px;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.financial-tips p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.financial-tips strong {
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+/* Animations */
+@keyframes slideUpAnim {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDownAnim {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-up {
+    animation: slideUpAnim 0.5s ease forwards;
+}
+
+.slide-down {
+    animation: slideDownAnim 0.5s ease forwards;
+}
