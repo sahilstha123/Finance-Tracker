@@ -11,7 +11,7 @@ import DefaultLayout from './components/Layout/DefaultLayout';
 function App() {
 
   return (
-    <div className="wrapper">
+    <div >
       <Routes>
         <Route path="/" element={<DefaultLayout/>}>
         <Route index element={<Login />} />

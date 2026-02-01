@@ -10,16 +10,10 @@ const Footer = () => {
     <footer className="app-footer mt-5">
       <Container>
         <Row className="py-4">
-          {/* Brand */}
-          <Col md={4} className="mb-3">
-            <p className="footer-text">
-              Building modern, secure and user-friendly web applications using
-              MERN stack.
-            </p>
-          </Col>
+         
 
           {/* Links */}
-          <Col md={4} className="mb-3">
+          <Col md={6} className="mb-3">
             <h6 className="footer-subtitle">Quick Links</h6>
             <Nav className="flex-column footer-links">
               <Nav.Link href="/">Home</Nav.Link>
@@ -30,7 +24,7 @@ const Footer = () => {
           </Col>
 
           {/* Contact */}
-          <Col md={4}>
+          <Col md={6}>
             <h6 className="footer-subtitle">Contact</h6>
             <p className="footer-text mb-1">📧 sahil@example.com</p>
             <p className="footer-text mb-0">📍 Nepal</p>

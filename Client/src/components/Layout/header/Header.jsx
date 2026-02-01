@@ -1,55 +1,32 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import { FaGithub, FaLinkedin, FaUserTie } from "react-icons/fa";
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import "./header.css"
 
 const Header = () => {
   return (
-    <Navbar expand="lg" fixed="top" className="app-header">
+    <Navbar expand="lg" className=" app-header" fixed="top">
       <Container>
-        {/* Brand */}
-        <Navbar.Brand href="/" className="brand">
-          <FaUserTie className="brand-icon" />
-          Sahil
-        </Navbar.Brand>
-
-        <Navbar.Toggle aria-controls="main-navbar" />
-
-        <Navbar.Collapse id="main-navbar">
-          {/* Center links */}
-          <Nav className="mx-auto nav-links">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/about">About</Nav.Link>
-            <Nav.Link href="/projects">Projects</Nav.Link>
-            <Nav.Link href="/contact">Contact</Nav.Link>
+        <Navbar.Brand href="#home" className="text-success fw-bold">Finance Tracker</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#link">Link</Nav.Link>
+            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
-
-          {/* Right side */}
-          <div className="header-actions">
-            <a
-              href="https://github.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="icon-link"
-            >
-              <FaGithub />
-            </a>
-            <a
-              href="https://linkedin.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="icon-link"
-            >
-              <FaLinkedin />
-            </a>
-
-            <Button variant="success" size="sm" className="hire-btn">
-              Hire Me
-            </Button>
-          </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>

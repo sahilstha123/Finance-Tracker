@@ -7,8 +7,8 @@ import FinancialTips from '../components/signup/FinancialTips';
 const SignUp = () => {
   return (
 
-    <Container className="p-1 p-md-4">
-      <Row className="SignupBg mx-auto g-0 ">
+    <Container fluid className="d-flex justify-content-center">
+      <Row className="SignupBg g-0">
         <Col
           xs={12}
           md={6}
@@ -26,6 +26,7 @@ const SignUp = () => {
         </Col>
       </Row>
     </Container>
+
 
 
   )
