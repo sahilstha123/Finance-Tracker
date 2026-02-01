@@ -2,12 +2,15 @@
 
 
 .wrapper {
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 30px);
     padding-top: 70px;  
     /* background: linear-gradient(135deg,
      var(--primary-color) 0%, var(--secondary-color) 50%, 
      var(--light-teal) 100%); */
    
+}
+.main{
+    min-height: 100vh;
 }
 
 .SignupBg {
