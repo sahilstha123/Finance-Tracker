@@ -1,7 +1,39 @@
-.app-header{
+.app-header {
     background: whitesmoke;
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgb(192, 189, 189);
     z-index: 1000;
     padding: 0.6rem 0;
+}
+
+/* links inside navbar-nav */
+.app-header .navbar-nav .link {
+    position: relative;
+    color: #333;
+    font-weight: 500;
+    margin-left: 1rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* animated underline */
+.app-header .navbar-nav .link::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #198754;
+    display: block;
+    transition: width 0.3s ease-in-out;
+}
+
+/* hover effects */
+.app-header .navbar-nav .link:hover {
+    color: #198754;
+}
+
+.app-header .navbar-nav .link:hover::after {
+    width: 100%;
 }

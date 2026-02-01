@@ -7,7 +7,7 @@ import "./footer.css"
 
 const Footer = () => {
   return (
-    <footer className="app-footer mt-5">
+    <footer className="app-footer mt-3">
       <Container>
         <Row className="py-4">
          
