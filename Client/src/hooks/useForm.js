@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-export const useForm = ()=>{
-    const [form, setForm] = useState({})
+export const useForm = (initialState)=>{
+    const [form, setForm] = useState(initialState)
 
     const handleOnChange = (e)=>{
         const {name,value} = e.target

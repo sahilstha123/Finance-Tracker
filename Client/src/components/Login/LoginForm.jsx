@@ -1,28 +1,24 @@
-import React, { useState } from 'react'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import CustomInput from '../signup/CustomInput';
 import "../signup/signup.css"
+import { useForm } from '../../hooks/useForm';
 const LoginForm = () => {
-  const [form,setForm] = useState({})
-
-  const handleOnChange =(e)=>{
-    const {name,value} = e.target
-    setForm(prev=>(
-      {...prev,
-        [name]:value
-      }
-    ))
+  const initialState = {
+    email: "",
+    password: "",
   }
-  const handleOnsubmit = (e)=>{
+  const { form, setForm, handleOnChange } = useForm(initialState)
+
+  const handleOnsubmit = (e) => {
     e.preventDefault(e)
-  console.log(form)
+    console.log(form)
 
     setForm({})
   }
   const field = [
-   
+
     {
       label: "Email",
       name: "email",
@@ -37,8 +33,8 @@ const LoginForm = () => {
       placeholder: "********",
       controlId: "formBasicPassword"
     },
-   
-   
+
+
   ];
   return (
     <Card className="w-100 h-100 shadow-sm signup-card border-0">

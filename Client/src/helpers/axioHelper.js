@@ -10,6 +10,7 @@ const apiProcessor = async ({ method, url, data }) => {
          return response.data;
     }
     catch (error) {
+        console.error("error",error.response)
         return {
             status: "error",
             message: error?.response?.data?.message || error?.message

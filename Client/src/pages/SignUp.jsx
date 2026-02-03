@@ -12,7 +12,7 @@ const SignUp = () => {
         <Col
           xs={12}
           md={6}
-          className="d-flex align-items-center justify-content-center p-3"
+          className="d-none d-md-flex align-items-center justify-content-center p-3"
         >
           <FinancialTips />
         </Col>

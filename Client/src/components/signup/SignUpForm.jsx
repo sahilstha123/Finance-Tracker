@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
@@ -6,17 +5,19 @@ import "./signup.css"
 import CustomInput from './CustomInput';
 import { toast } from "react-toastify";
 import { postNewUser } from '../../helpers/axioHelper';
+import { useForm } from '../../hooks/useForm';
 
 const SignUpForm = () => {
-  const [form, setForm] = useState({});
+  const initialState = {
+    name:"",
+    email:"",
+    password:"",
+    confirmPassword:""
+  }
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setForm(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  
+  const {form,setForm,handleOnChange}=useForm(initialState)
+  
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -29,25 +30,22 @@ const SignUpForm = () => {
       });
     }
     try {
-      // const data = await postNewUser(rest)
-      // setForm({})
-      // console.log(data)
+      
       const { status, message } = await postNewUser(rest)
       if (status === "success") {
         toast.success(message, {
           autoClose: 3000,
           style: { color: "green" },
-        className: "toast-mobile"
+          className: "toast-mobile"
 
         })
-        setForm({})
+        setForm(initialState)
       }
-      else
-      {
+      else {
         toast.error(message || "something went wrong", {
           autoClose: 3000,
           style: { color: "red" },
-        className: "toast-mobile"
+          className: "toast-mobile"
 
         })
       }
@@ -96,7 +94,7 @@ const SignUpForm = () => {
       placeholder: "********",
       controlId: "formBasicConfirmPassword"
     },
-   
+
   ];
 
   return (
