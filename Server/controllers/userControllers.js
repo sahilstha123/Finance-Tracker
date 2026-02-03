@@ -1,18 +1,9 @@
-const { insertUser, AllUsers, findUserByEmail } = require("../models/user/UserModel");
-const { hasPassword } = require("../utils/bcrypt");
+const { insertUser, findUserByEmail } = require("../models/user/UserModel");
+const { hashPassword, comparePassword } = require("../utils/bcrypt");
 
-exports.getUser = async (req, res) => {
-  const users = await AllUsers();
-  res.status(200).json({
-    status: "success",
-    message: "User fetched successfully",
-    data: users
-  });
-};
 
 exports.createUser = async (req, res) => {
   const { email, password } = req.body
-  const existingUser = await findUserByEmail(email)
 
   // email and password are required
   if (!email || !password) {
@@ -22,6 +13,7 @@ exports.createUser = async (req, res) => {
     })
   }
 
+  const existingUser = await findUserByEmail(email)
   // checking if user already exists
   if (existingUser?._id) {
     return res.status(409).json({
@@ -31,7 +23,7 @@ exports.createUser = async (req, res) => {
   }
 
   // hasing password
-  const hashPass = await hasPassword(password)
+  const hashPass = await hashPassword(password)
   const user = await insertUser({
     ...req.body
     , password: hashPass
@@ -46,4 +38,41 @@ exports.createUser = async (req, res) => {
       status: "error",
       message: "Unable to create user"
     })
+}
+
+// login Api 
+
+exports.loginUser = async (req, res) => {
+  const { email, password } = req.body
+  // email and password are required
+  if (!email || !password) {
+    return res.status(400).json({
+      status: "error",
+      message: "Email and Password are required"
+    })
+  }
+  const user = await findUserByEmail(email)
+  if (!user) {
+    return res.status(401).json({
+      status: "error",
+      message: "Invalid Email or Password"
+    })
+  }
+const matchUser = await comparePassword(password, user.password)
+  if (!matchUser) {
+    return res.status(401).json({
+      status: "error",
+      message: "Invalid Email or Password"
+    })
+  }
+
+  return res.json({
+    status: "success",
+    message: "Login successfully",
+    user:{
+      _id: user._id,
+      name: user.name,
+      email: user.email
+    }
+  })
 }
