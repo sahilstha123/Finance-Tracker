@@ -4,6 +4,8 @@ import Card from "react-bootstrap/Card";
 import CustomInput from '../signup/CustomInput';
 import "../signup/signup.css"
 import { useForm } from '../../hooks/useForm';
+import { loginUser } from "../../helpers/axioHelper";
+import { toast } from "react-toastify";
 const LoginForm = () => {
   const initialState = {
     email: "",
@@ -11,8 +13,14 @@ const LoginForm = () => {
   }
   const { form, setForm, handleOnChange } = useForm(initialState)
 
-  const handleOnsubmit = (e) => {
-    e.preventDefault(e)
+  const handleOnsubmit = async(e) => {
+    e.preventDefault()
+    const {status,message} = await loginUser(form)
+    toast[status](message,{
+      className: "toast-mobile",
+      autoclose:3000,
+      style:{color: status==="success"?"green":"red"}
+    })
     console.log(form)
 
     setForm({})
