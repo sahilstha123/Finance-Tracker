@@ -1,71 +1,119 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import CustomInput from '../signup/CustomInput';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Spinner from 'react-bootstrap/Spinner';
+import { useState } from 'react';
 import "../signup/signup.css"
 import { useForm } from '../../hooks/useForm';
 import { loginUser } from "../../helpers/axioHelper";
 import { toast } from "react-toastify";
+import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
+
 const LoginForm = () => {
   const initialState = {
     email: "",
     password: "",
   }
   const { form, setForm, handleOnChange } = useForm(initialState)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleOnsubmit = async(e) => {
+  const handleOnsubmit = async (e) => {
     e.preventDefault()
-    const {status,message} = await loginUser(form)
-    toast[status](message,{
-      className: "toast-mobile",
-      autoclose:3000,
-      style:{color: status==="success"?"green":"red"}
-    })
-    console.log(form)
+    setIsLoading(true);
 
-    setForm({})
+    try {
+      const { status, message } = await loginUser(form)
+
+      toast[status](message, {
+        className: "toast-mobile",
+        autoClose: 3000,
+        style: { color: status === "success" ? "green" : "red" },
+        icon: status === "success" ? <BsCheckCircleFill className="text-success" /> : <BsExclamationTriangleFill className="text-danger" />
+      })
+
+      if (status === 'success') {
+        setForm(initialState); // Clear form only on success if desired, or just redirect
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   }
-  const field = [
 
+  const field = [
     {
-      label: "Email",
+      label: "Email Address",
       name: "email",
       type: "email",
-      placeholder: "Enter your email",
-      controlId: "formBasicEmail"
+      placeholder: "name@example.com",
+      controlId: "floatingEmail"
     },
     {
       label: "Password",
       name: "password",
       type: "password",
-      placeholder: "********",
-      controlId: "formBasicPassword"
+      placeholder: "Password",
+      controlId: "floatingPassword"
     },
-
-
   ];
+
   return (
-    <Card className="w-100 h-100 shadow-sm signup-card login-card border-0">
-      <Card.Body>
-        <Card.Title className="text-center text-success">Sign In</Card.Title>
-        <Form onSubmit={handleOnsubmit}>
-          {field.map((items) => (
-            <CustomInput
-              key={items.label}
-              {...items}
+    <div className="d-flex flex-column justify-content-center h-100 px-4 px-md-5">
+      <div className="mb-5">
+        <h2 className="display-6 fw-bold text-success mb-2">Welcome Back</h2>
+        <p className="text-secondary">Please sign in to continue</p>
+      </div>
+
+      <Form onSubmit={handleOnsubmit}>
+        {field.map((items) => (
+          <FloatingLabel
+            key={items.label}
+            controlId={items.controlId}
+            label={items.label}
+            className="mb-3 text-secondary"
+          >
+            <Form.Control
+              type={items.type}
+              placeholder={items.placeholder}
+              name={items.name}
               onChange={handleOnChange}
               value={form?.[items.name] || ""}
+              className="rounded-3 border-light bg-light focus-ring focus-ring-success"
+              required
             />
-          ))}
-          <Button variant="success" type="submit" className="w-100 mb-3">
-            Login
-          </Button>
-          <div className="text-center">
-            Desnot have an account ? <a href="/signup">Sign Up</a>
-          </div>
-        </Form>
-      </Card.Body>
-    </Card>
+          </FloatingLabel>
+        ))}
+
+        <Button
+          variant="success"
+          type="submit"
+          className="w-100 mb-4 py-3 fw-semibold rounded-3 d-flex align-items-center justify-content-center gap-2"
+          disabled={isLoading}
+          style={{ transition: 'all 0.3s ease' }}
+        >
+          {isLoading ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span>Signing In...</span>
+            </>
+          ) : (
+            "Sign In"
+          )}
+        </Button>
+
+        <div className="text-center text-muted small">
+          Don't have an account? <a href="/signup" className="text-decoration-none fw-bold text-success ms-1">Sign Up</a>
+        </div>
+      </Form>
+    </div>
   )
 }
 

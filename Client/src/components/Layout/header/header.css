@@ -34,6 +34,17 @@
     color: #198754;
 }
 
-.app-header .navbar-nav .link:hover::after {
-    width: 100%;
+/* Mobile Menu Refinements */
+@media (max-width: 991px) {
+    .app-header .navbar-nav .link {
+        width: fit-content;
+        margin-left: 0;
+        margin-bottom: 0.8rem;
+        font-size: 1.1rem;
+    }
+}
+
+/* Remove default toggle icon since we use custom SVG */
+.navbar-toggler-icon {
+    display: none;
 }

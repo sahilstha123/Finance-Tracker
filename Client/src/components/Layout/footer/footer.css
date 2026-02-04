@@ -1,82 +1,64 @@
-.app-footer {
-    /* background: linear-gradient(
-        180deg,
-        #0b0f14 0%,   /* deep charcoal */
-    /* #06080c 100%  near black */
-    /* ); */
-    background: #ffffff;
-    color: #374151;
-    box-shadow: 0 -25px 50px rgba(155, 153, 153, 0.5);
+.app-footer-dark {
+    background-color: var(--dark-green, #14532d);
+    color: #e5e5e5;
+    position: relative;
+    z-index: 10;
 }
 
-/* Subtle top glow */
-.app-footer::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-            transparent,
-            var(--primary-color),
-            transparent);
-    opacity: 0.4;
+.footer-brand {
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
 }
 
-/* Titles */
-.footer-title {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    color: var(--primary-color)
-}
-
-.footer-subtitle {
-    font-size: 0.95rem;
+.footer-heading {
     font-weight: 600;
-    margin-bottom: 0.6rem;
-    color: var(--primary-color)
+    font-size: 1rem;
+    letter-spacing: 0.5px;
 }
 
 /* Text */
 .footer-text {
     font-size: 0.9rem;
-    line-height: 1.7;
-   color: #4b5563;
+    line-height: 1.6;
 }
 
 /* Links */
 .footer-links .nav-link {
-    color: var(--primary-color);
-    padding: 0.25rem 0;
+    color: rgba(255, 255, 255, 0.6) !important;
+    padding: 0.2rem 0;
     font-size: 0.9rem;
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
 }
 
 .footer-links .nav-link:hover {
-    color: var(--primary-color);
-    transform: translateX(6px);
+    color: #fff !important;
+    padding-left: 5px;
 }
 
-/* Bottom Bar */
-.footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    margin-top: 1rem;
-    padding-top: 1rem;
-    font-size: 0.85rem;
-   color: #6b7280;
-    text-align: center;
+/* Social Icons */
+.social-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
 }
 
-/* Responsive */
+.social-link:hover {
+    background: var(--primary-color);
+    transform: translateY(-3px);
+    color: white;
+}
+
+/* Mobile Adjustments */
 @media (max-width: 768px) {
-    .footer-title {
-        font-size: 1.2rem;
-    }
-
-    .footer-text,
-    .footer-links .nav-link {
-        font-size: 0.85rem;
+    .app-footer-dark {
+        text-align: left;
     }
 }

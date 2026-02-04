@@ -1,43 +1,48 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Spinner from 'react-bootstrap/Spinner';
+import { useState } from 'react';
 import "./signup.css"
-import CustomInput from './CustomInput';
 import { toast } from "react-toastify";
 import { postNewUser } from '../../helpers/axioHelper';
 import { useForm } from '../../hooks/useForm';
+import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
 
 const SignUpForm = () => {
   const initialState = {
-    name:"",
-    email:"",
-    password:"",
-    confirmPassword:""
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
   }
 
-  
-  const {form,setForm,handleOnChange}=useForm(initialState)
-  
+  const { form, setForm, handleOnChange } = useForm(initialState)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const { confirmPassword, ...rest } = form;
     if (confirmPassword !== form.password) {
-      return toast.error("Password do not match", {
+      return toast.error("Popwords do not match", {
         autoClose: 3000,
         style: { color: "red" },
         className: "toast-mobile"
       });
     }
+
+    setIsLoading(true);
+
     try {
-      
       const { status, message } = await postNewUser(rest)
+
       if (status === "success") {
         toast.success(message, {
           autoClose: 3000,
           style: { color: "green" },
-          className: "toast-mobile"
-
+          className: "toast-mobile",
+          icon: <BsCheckCircleFill className="text-success" />
         })
         setForm(initialState)
       }
@@ -45,80 +50,110 @@ const SignUpForm = () => {
         toast.error(message || "something went wrong", {
           autoClose: 3000,
           style: { color: "red" },
-          className: "toast-mobile"
-
+          className: "toast-mobile",
+          icon: <BsExclamationTriangleFill className="text-danger" />
         })
       }
 
     }
     catch (error) {
-      // Catch any unexpected errors
       toast.error(error.message || "Something went wrong", {
         autoClose: 3000,
         style: { color: "red" },
         className: "toast-mobile"
-
       });
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
-
-
   };
 
   const field = [
     {
-      label: "Name",
+      label: "Full Name",
       name: "name",
       type: "text",
       placeholder: "Enter your Name",
-      controlId: "formBasicName"
+      controlId: "floatingName"
     },
     {
-      label: "Email",
+      label: "Email Address",
       name: "email",
       type: "email",
-      placeholder: "Enter your email",
-      controlId: "formBasicEmail"
+      placeholder: "name@example.com",
+      controlId: "floatingEmail"
     },
     {
       label: "Password",
       name: "password",
       type: "password",
-      placeholder: "********",
-      controlId: "formBasicPassword"
+      placeholder: "Password",
+      controlId: "floatingPassword"
     },
     {
       label: "Confirm Password",
       name: "confirmPassword",
       type: "password",
-      placeholder: "********",
-      controlId: "formBasicConfirmPassword"
+      placeholder: "Confirm Password",
+      controlId: "floatingConfirmPassword"
     },
-
   ];
 
   return (
-    <Card className="w-100 h-100 shadow-sm signup-card border-0">
-      <Card.Body>
-        <Card.Title className="text-center text-success">Create Your Account</Card.Title>
-        <Form onSubmit={handleOnSubmit}>
-          {field.map((items) => (
-            <CustomInput
-              key={items.label}
-              {...items}
+    <div className="d-flex flex-column justify-content-center h-100 px-4 ">
+      <div className="mb-4">
+        <h2 className="fw-bold text-success mb-2">Create Account</h2>
+        <p className="text-secondary small">Join us to manage your finances better</p>
+      </div>
+
+      <Form onSubmit={handleOnSubmit}>
+        {field.map((items) => (
+          <FloatingLabel
+            key={items.label}
+            controlId={items.controlId}
+            label={items.label}
+            className="mb-3 text-secondary"
+          >
+            <Form.Control
+              type={items.type}
+              placeholder={items.placeholder}
+              name={items.name}
               onChange={handleOnChange}
               value={form?.[items.name] || ""}
+              className="rounded-3 border-light bg-light focus-ring focus-ring-success"
+              required
             />
-          ))}
-          <Button variant="success" type="submit" className="w-100 mb-3">
-            SignUp
-          </Button>
-          <div className="text-center">
-            Already have an account ? <a href="/">Login</a>
-          </div>
-        </Form>
-      </Card.Body>
-    </Card>
+          </FloatingLabel>
+        ))}
+
+        <Button
+          variant="success"
+          type="submit"
+          className="w-100 mb-4 py-3 fw-semibold rounded-3 d-flex align-items-center justify-content-center gap-2"
+          disabled={isLoading}
+          style={{ transition: 'all 0.3s ease' }}
+        >
+          {isLoading ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span>Creating Account...</span>
+            </>
+          ) : (
+            "Sign Up"
+          )}
+        </Button>
+
+        <div className="text-center text-muted small">
+          Already have an account? <a href="/" className="text-decoration-none fw-bold text-success ms-1">Login</a>
+        </div>
+      </Form>
+    </div>
   );
 };
 
