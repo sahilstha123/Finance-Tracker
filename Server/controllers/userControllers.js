@@ -1,5 +1,6 @@
 const { insertUser, findUserByEmail } = require("../models/user/UserModel");
 const { hashPassword, comparePassword } = require("../utils/bcrypt");
+const { signJwt } = require("../utils/jwt");
 
 
 exports.createUser = async (req, res) => {
@@ -65,14 +66,17 @@ const matchUser = await comparePassword(password, user.password)
       message: "Invalid Email or Password"
     })
   }
-
+  const accessJwt = signJwt({
+    email
+  })
   return res.json({
     status: "success",
     message: "Login successfully",
     user:{
       _id: user._id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      accessJwt
     }
   })
 }
