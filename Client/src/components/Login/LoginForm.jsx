@@ -37,7 +37,7 @@ const LoginForm = () => {
 
   ];
   return (
-    <Card className="w-100 h-100 shadow-sm signup-card border-0">
+    <Card className="w-100 h-100 shadow-sm signup-card login-card border-0">
       <Card.Body>
         <Card.Title className="text-center text-success">Sign In</Card.Title>
         <Form onSubmit={handleOnsubmit}>

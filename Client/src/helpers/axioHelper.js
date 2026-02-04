@@ -22,7 +22,7 @@ const apiProcessor = async ({ method, url, data }) => {
 export const postNewUser = (data) => {
     const obj = {
         method: "post",
-        url: rootApiEP + "/users",
+        url: rootApiEP + "/users/signup",
         data,
     }
     return apiProcessor(obj)

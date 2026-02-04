@@ -4,11 +4,20 @@
     border-radius: 0;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
     background: #ffffff;
     min-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.signup-card.login-card {
+    border-top-left-radius: 30px !important;
+    border-bottom-left-radius: 30px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }
 
 .signup-card .card-body {
@@ -71,6 +80,7 @@
 .signup-card .btn-success:active {
     transform: translateY(0);
 }
+
 .signup-card .text-center a {
     color: var(--primary-color);
     font-weight: 600;
