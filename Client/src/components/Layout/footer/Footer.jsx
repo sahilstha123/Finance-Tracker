@@ -13,7 +13,7 @@ const Footer = () => {
       <Container>
         <Row className="gy-4">
           {/* Brand & About */}
-          <Col lg={4} md={6}>
+          <Col lg={6} md={6}>
             <h5 className="footer-brand text-white fw-bold mb-3 d-flex align-items-center gap-2">
               <FaHandHoldingDollar className="text-success" size={24} /> Finance Tracker
             </h5>
@@ -28,30 +28,12 @@ const Footer = () => {
             </div>
           </Col>
 
-          {/* Quick Links */}
-          <Col lg={2} md={6} xs={6}>
-            <h6 className="footer-heading text-white mb-3">Company</h6>
-            <Nav className="flex-column footer-links">
-              <Nav.Link href="/about">About Us</Nav.Link>
-              <Nav.Link href="/features">Features</Nav.Link>
-              <Nav.Link href="/careers">Careers</Nav.Link>
-              <Nav.Link href="/check">Check</Nav.Link>
-            </Nav>
-          </Col>
+          
 
-          {/* Resources */}
-          <Col lg={2} md={6} xs={6}>
-            <h6 className="footer-heading text-white mb-3">Resources</h6>
-            <Nav className="flex-column footer-links">
-              <Nav.Link href="/blog">Blog</Nav.Link>
-              <Nav.Link href="/help">Help Center</Nav.Link>
-              <Nav.Link href="/privacy">Privacy Policy</Nav.Link>
-              <Nav.Link href="/terms">Terms</Nav.Link>
-            </Nav>
-          </Col>
+          
 
           {/* Contact */}
-          <Col lg={4} md={6}>
+          <Col lg={6} md={6}>
             <h6 className="footer-heading text-white mb-3">Stay Connected</h6>
             <p className="footer-text text-white-50 mb-2">Subscribe to our newsletter for the latest financial tips.</p>
             <form className="d-flex gap-2">
