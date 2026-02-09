@@ -5,8 +5,11 @@ import Navbar from 'react-bootstrap/Navbar';
 import "./header.css"
 import { Link } from "react-router-dom";
 import { CiLogin } from "react-icons/ci";
+import { CgLogOut } from "react-icons/cg";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { AiFillDashboard } from "react-icons/ai";
+import { AiOutlineTransaction } from "react-icons/ai";
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
@@ -46,6 +49,27 @@ const Header = () => {
               onClick={() => setExpanded(false)}
             >
               Login <CiLogin size={20} />
+            </Link>
+            <Link
+              to="/dashboard"
+              className="link d-flex align-items-center gap-1"
+              onClick={() => setExpanded(false)}
+            >
+             <AiFillDashboard size={20}/> Dashboard 
+            </Link>
+            <Link
+              to="/transaction"
+              className="link d-flex align-items-center gap-1"
+              onClick={() => setExpanded(false)}
+            >
+            <AiOutlineTransaction size={20}/>  Transaction 
+            </Link>
+            <Link
+              to="/"
+              className="link d-flex align-items-center gap-1"
+              onClick={() => setExpanded(false)}
+            >
+            <CgLogOut size={20}/>  Logout
             </Link>
           </Nav>
         </Navbar.Collapse>

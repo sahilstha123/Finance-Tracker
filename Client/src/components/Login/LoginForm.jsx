@@ -33,7 +33,7 @@ const LoginForm = () => {
       })
 
       if (status === 'success') {
-        setForm(initialState); // Clear form only on success if desired, or just redirect
+        setForm(initialState); 
       }
     } catch (error) {
       toast.error("Something went wrong. Please try again.");

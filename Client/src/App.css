@@ -5,11 +5,9 @@ body {
     background-color: var(--bg-color);
 }
 
-.wrapper-bg {
-    /* background: whitesmoke; */
-    position: relative;
-    padding-top: 80px;
-    /* Fix for fixed header overlap */
+
+.main{
+    margin-top: 70px;
 }
 
 
