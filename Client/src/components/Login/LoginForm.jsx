@@ -3,14 +3,18 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Spinner from 'react-bootstrap/Spinner';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import "../signup/signup.css"
 import { useForm } from '../../hooks/useForm';
 import { loginUser } from "../../helpers/axioHelper";
 import { toast } from "react-toastify";
 import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
+import { useUserContext } from "../../context/userContext";
+import { useNavigate } from "react-router-dom"
 
 const LoginForm = () => {
+  const navigate = useNavigate()
+  const { userData, setUserData } = useUserContext()
   const initialState = {
     email: "",
     password: "",
@@ -18,12 +22,16 @@ const LoginForm = () => {
   const { form, setForm, handleOnChange } = useForm(initialState)
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    userData?._id && navigate("/dashboard")
+  }, [userData?._id])
+
   const handleOnsubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true);
 
     try {
-      const { status, message } = await loginUser(form)
+      const { status, message, user } = await loginUser(form)
 
       toast[status](message, {
         className: "toast-mobile",
@@ -33,7 +41,8 @@ const LoginForm = () => {
       })
 
       if (status === 'success') {
-        setForm(initialState); 
+        setUserData(user)
+        setForm(initialState);
       }
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
