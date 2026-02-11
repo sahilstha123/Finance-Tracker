@@ -32,7 +32,6 @@ const LoginForm = () => {
 
     try {
       const { status, message, user } = await loginUser(form)
-
       toast[status](message, {
         className: "toast-mobile",
         autoClose: 3000,
@@ -42,6 +41,7 @@ const LoginForm = () => {
 
       if (status === 'success') {
         setUserData(user)
+        localStorage.setItem("JwtToken",user.accessJwt)
         setForm(initialState);
       }
     } catch (error) {
