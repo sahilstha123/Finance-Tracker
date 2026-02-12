@@ -59,7 +59,7 @@ exports.loginUser = async (req, res) => {
       message: "Invalid Email or Password"
     })
   }
-const matchUser = await comparePassword(password, user.password)
+  const matchUser = await comparePassword(password, user.password)
   if (!matchUser) {
     return res.status(401).json({
       status: "error",
@@ -72,11 +72,19 @@ const matchUser = await comparePassword(password, user.password)
   return res.json({
     status: "success",
     message: "Login successfully",
-    user:{
+    user: {
       _id: user._id,
       name: user.name,
       email: user.email,
       accessJwt
     }
+  })
+}
+
+// get User
+exports.getUser = async (req, res) => {
+  res.json({
+    status: "success",
+    message: "You are authorized"
   })
 }
