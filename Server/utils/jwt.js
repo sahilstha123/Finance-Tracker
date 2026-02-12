@@ -5,3 +5,12 @@ exports.signJwt = (obj) => {
     })
     return token
 }
+exports.verifyjwt = (token) => {
+    try {
+
+        return jwt.verify(token, process.env.JWT_SECRET_KEY)
+    }
+    catch (error) {
+        return null
+    }
+}

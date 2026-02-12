@@ -13,7 +13,7 @@ app.use(express.json())
 app.get("/", (req, res) => {
     res.status(200).send("Server is running yaya ")
 })
-app.use("/api/v1",userRouter)
+app.use("/api/v1/users",userRouter)
 app.use(errorHandler)
 app.listen(PORT, (error) => {
     error ? console.log(error) :
