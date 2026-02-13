@@ -83,8 +83,11 @@ exports.loginUser = async (req, res) => {
 
 // get User
 exports.getUser = async (req, res) => {
+
+  const user = req.userInfo
   res.json({
     status: "success",
-    message: "You are authorized"
+    message: "You are authorized",
+    user
   })
 }
