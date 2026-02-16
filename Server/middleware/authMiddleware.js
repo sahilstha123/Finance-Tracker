@@ -16,6 +16,7 @@ exports.auth = asyncHandler(async (req, res, next) => {
     if (decode?.email) {
         const user = await findUserByEmail(decode.email)
         if (user?._id) {
+            user.password = undefined
             req.userInfo = user
             return next()
         }
