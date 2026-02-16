@@ -1,50 +1,117 @@
-.app-header {
-    background: whitesmoke;
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgb(192, 189, 189);
-    z-index: 1000;
-    padding: 0.6rem 0;
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --primary-green: #198754;
+    --hover-green: #146c43;
 }
 
-/* links inside navbar-nav */
+.app-header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 1050;
+    padding: 0.7rem 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-header.scrolled {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 0.5rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.02);
+}
+
+/* Nav Links Styling */
 .app-header .navbar-nav .link {
     position: relative;
-    color: #333;
+    color: #2c3e50;
     font-weight: 500;
-    margin-left: 1rem;
+    margin: 0 0.8rem;
+    padding: 0.5rem 0;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.95rem;
 }
 
-/* animated underline */
+.app-header .navbar-nav .link:hover,
+.app-header .navbar-nav .link.active {
+    color: var(--primary-green);
+}
+
+/* Modern Underline Animation */
 .app-header .navbar-nav .link::after {
     content: "";
     position: absolute;
-    bottom: -4px;
-    left: 0;
+    bottom: 0;
+    left: 50%;
     width: 0;
     height: 2px;
-    background-color: #198754;
-    display: block;
-    transition: width 0.3s ease-in-out;
+    background: linear-gradient(90deg, var(--primary-green), #28a745);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
 }
 
-/* hover effects */
-.app-header .navbar-nav .link:hover {
-    color: #198754;
+.app-header .navbar-nav .link:hover::after,
+.app-header .navbar-nav .link.active::after {
+    width: 100%;
+}
+
+/* Mobile Toggle Styling */
+.navbar-toggler {
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.navbar-toggler:hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 /* Mobile Menu Refinements */
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background: white;
+        margin-top: 1rem;
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--glass-border);
+    }
+
     .app-header .navbar-nav .link {
-        width: fit-content;
-        margin-left: 0;
-        margin-bottom: 0.8rem;
+        width: 100%;
+        margin: 0.5rem 0;
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
         font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .app-header .navbar-nav .link:hover {
+        background-color: rgba(25, 135, 84, 0.08);
+    }
+
+    .app-header .navbar-nav .link::after {
+        display: none;
     }
 }
 
-/* Remove default toggle icon since we use custom SVG */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Remove default toggle icon */
 .navbar-toggler-icon {
     display: none;
 }

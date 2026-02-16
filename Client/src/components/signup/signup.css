@@ -77,6 +77,39 @@
     background: linear-gradient(135deg, var(--dark-teal) 0%, var(--primary-color) 100%);
 }
 
+/* Existing styles... */
+
+/* Password visibility toggle styles */
+.password-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 28px;
+    /* Adjusted to center vertically within a FloatingLabel height */
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+    color: #6c757d;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.password-toggle:hover {
+    color: #198754;
+    background-color: rgba(25, 135, 84, 0.1);
+}
+
+.password-toggle:active {
+    transform: translateY(-50%) scale(0.9);
+}
+
 .signup-card .btn-success:active {
     transform: translateY(0);
 }

@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import { postNewUser } from '../../helpers/axioHelper';
 import { useForm } from '../../hooks/useForm';
 import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const SignUpForm = () => {
   const initialState = {
@@ -20,6 +22,8 @@ const SignUpForm = () => {
 
   const { form, setForm, handleOnChange } = useForm(initialState)
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -108,22 +112,51 @@ const SignUpForm = () => {
 
       <Form onSubmit={handleOnSubmit}>
         {field.map((items) => (
-          <FloatingLabel
-            key={items.label}
-            controlId={items.controlId}
-            label={items.label}
-            className="mb-3 text-secondary"
-          >
-            <Form.Control
-              type={items.type}
-              placeholder={items.placeholder}
-              name={items.name}
-              onChange={handleOnChange}
-              value={form?.[items.name] || ""}
-              className="rounded-3 border-light bg-light focus-ring focus-ring-success"
-              required
-            />
-          </FloatingLabel>
+          <div key={items.name} className="password-wrapper">
+            <FloatingLabel
+              controlId={items.controlId}
+              label={items.label}
+              className="mb-3 text-secondary"
+            >
+              <Form.Control
+                type={
+                  items.name === "password"
+                    ? (showPassword ? "text" : "password")
+                    : items.name === "confirmPassword"
+                      ? (showConfirmPassword ? "text" : "password")
+                      : items.type
+                }
+                placeholder={items.placeholder}
+                name={items.name}
+                onChange={handleOnChange}
+                value={form?.[items.name] || ""}
+                className="rounded-3 border-light bg-light focus-ring focus-ring-success"
+                required
+              />
+            </FloatingLabel>
+
+            {items.type === "password" && (
+              <span
+                className="password-toggle"
+                onClick={() =>
+                  items.name === "password"
+                    ? setShowPassword(!showPassword)
+                    : setShowConfirmPassword(!showConfirmPassword)
+                }
+                title={
+                  (items.name === "password" ? showPassword : showConfirmPassword)
+                    ? "Hide password"
+                    : "Show password"
+                }
+              >
+                {(items.name === "password" ? showPassword : showConfirmPassword) ? (
+                  <AiOutlineEyeInvisible size={20} />
+                ) : (
+                  <AiOutlineEye size={20} />
+                )}
+              </span>
+            )}
+          </div>
         ))}
 
         <Button
