@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import "./header.css"
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CiLogin } from "react-icons/ci";
 import { CgLogOut } from "react-icons/cg";
 import { FaHandHoldingDollar } from "react-icons/fa6";
@@ -16,18 +16,8 @@ import { useUserContext } from "../../../context/userContext";
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const { userData, setUserData } = useUserContext()
   const navigate = useNavigate();
-
-  // Handle scroll for glassmorphism shadow
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleOnLogout = () => {
     localStorage.removeItem("JwtToken")
@@ -42,64 +32,65 @@ const Header = () => {
   return (
     <Navbar
       expand="lg"
-      className={`app-header ${scrolled ? 'scrolled' : ''}`}
+      className="app-header"
       fixed="top"
       expanded={expanded}
     >
       <Container>
         <Navbar.Brand as={Link} to="/" className="text-success fw-bold d-flex align-items-center gap-2">
-          Finance Tracker <FaHandHoldingDollar size={28} className="brand-icon" />
+          Finance Tracker <FaHandHoldingDollar size={24} />
         </Navbar.Brand>
 
         <Navbar.Toggle
           aria-controls="basic-navbar-nav"
-          onClick={() => setExpanded(!expanded)}
-          className="border-0 shadow-none p-2"
+          onClick={() => setExpanded(expanded ? false : true)}
+          className="border-0 shadow-none"
         >
-          {expanded ? <FaTimes size={24} className="text-success" /> : <FaBars size={24} className="text-success" />}
+          {expanded ? <FaTimes size={24} color="#198754" /> : <FaBars size={24} color="#198754" />}
         </Navbar.Toggle>
 
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto align-items-lg-center">
+          <Nav className="ms-auto">
             {!isLoggedIn ? (
               <>
-                <NavLink
+                <Link
                   to="/signup"
-                  className={({ isActive }) => `link ${isActive ? 'active' : ''}`}
+                  className="link"
                   onClick={() => setExpanded(false)}
                 >
                   SignUp
-                </NavLink>
-                <NavLink
+                </Link>
+                <Link
                   to="/"
-                  className={({ isActive }) => `link d-flex align-items-center gap-2 ${isActive ? 'active' : ''}`}
+                  className="link d-flex align-items-center gap-1"
                   onClick={() => setExpanded(false)}
                 >
-                  Login <CiLogin size={18} />
-                </NavLink>
+                  Login <CiLogin size={20} />
+                </Link>
               </>
             ) : (
               <>
-                <NavLink
+                <Link
                   to="/dashboard"
-                  className={({ isActive }) => `link d-flex align-items-center gap-2 ${isActive ? 'active' : ''}`}
+                  className="link d-flex align-items-center gap-1"
                   onClick={() => setExpanded(false)}
                 >
-                  <AiFillDashboard size={18} /> Dashboard
-                </NavLink>
-                <NavLink
+                  <AiFillDashboard size={20} /> Dashboard
+                </Link>
+                <Link
                   to="/transaction"
-                  className={({ isActive }) => `link d-flex align-items-center gap-2 ${isActive ? 'active' : ''}`}
+                  className="link d-flex align-items-center gap-1"
                   onClick={() => setExpanded(false)}
                 >
-                  <AiOutlineTransaction size={18} />  Transaction
-                </NavLink>
+                  <AiOutlineTransaction size={20} />  Transaction
+                </Link>
                 <Nav.Link
-                  as="div"
-                  className="link d-flex align-items-center gap-2 cursor-pointer text-danger-hover"
+                  as="span"
+                  className="link d-flex align-items-center gap-1 cursor-pointer"
                   onClick={handleOnLogout}
+                  style={{ cursor: 'pointer' }}
                 >
-                  <CgLogOut size={18} />  Logout
+                  <CgLogOut size={20} />  Logout
                 </Nav.Link>
               </>
             )}
