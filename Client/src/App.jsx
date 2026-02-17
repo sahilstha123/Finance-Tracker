@@ -11,8 +11,13 @@ import DefaultLayout from './components/Layout/DefaultLayout';
 import Dashboard from './pages/Dashboard';
 import Transaction from './pages/Transaction';
 import Auth from './auth/Auth';
+import { useUserContext } from './context/userContext';
+import { autoLogin } from './utils/users';
 function App() {
-
+  const { userData,setUserData } = useUserContext()
+  useEffect(() => {
+    !userData?._id && autoLogin(setUserData)
+  }, [userData?._id])
   return (
     <div >
       <Routes>

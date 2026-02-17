@@ -1,11 +1,16 @@
 import axios from "axios"
 const rootApiEP = "http://localhost:8000/api/v1"
-const apiProcessor = async ({ method, url, data }) => {
+
+const getAccessJwt = ()=>{
+    return localStorage.getItem("JwtToken")
+}
+const apiProcessor = async ({ method, url, data,headers }) => {
     try {
         const response = await axios({
             method,
             url,
-            data
+            data,
+            headers
         })
          return response.data;
     }
@@ -33,6 +38,18 @@ export const loginUser = (data) =>{
         method: "post",
         url: rootApiEP + "/users/login",
         data
+    }
+    return apiProcessor(obj)
+}
+
+// get user 
+export const getUser = ()=>{
+    const obj = {
+        method: "get",
+        url: rootApiEP + "/users",
+        headers: {
+            Authorization: getAccessJwt()
+        }
     }
     return apiProcessor(obj)
 }
