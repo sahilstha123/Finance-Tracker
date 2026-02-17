@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import './App.css'
 import "./style/global.css"
 import "./style/variable.css"
@@ -13,11 +14,31 @@ import Transaction from './pages/Transaction';
 import Auth from './auth/Auth';
 import { useUserContext } from './context/userContext';
 import { autoLogin } from './utils/users';
+import SplashScreen from './components/common/SplashScreen';
+
 function App() {
-  const { userData,setUserData } = useUserContext()
+  const { userData, setUserData, appLoading, setAppLoading } = useUserContext()
+  const [showSplash, setShowSplash] = useState(true);
   useEffect(() => {
-    !userData?._id && autoLogin(setUserData)
-  }, [userData?._id])
+    if (!userData?._id) {
+      autoLogin(setUserData, setAppLoading)
+    } else {
+      setAppLoading(false)
+    }
+  }, [userData?._id, setAppLoading, setUserData])
+
+  if (appLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100 bg-dark text-success">
+        <Spinner animation="border" variant="success" />
+      </div>
+    )
+  }
+
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
+
   return (
     <div >
       <Routes>

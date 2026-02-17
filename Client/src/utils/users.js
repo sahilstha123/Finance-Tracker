@@ -1,14 +1,16 @@
 import { getUser } from "../helpers/axioHelper"
 
-export const autoLogin = async(setUser)=>{
+export const autoLogin = async (setUser, setAppLoading) => {
     const accessJwt = localStorage.getItem("JwtToken")
-    if(accessJwt)
-    {
+    if (accessJwt) {
         const response = await getUser()
-        if(response.status === "success")
-        {
+        if (response.status === "success") {
             setUser(response.user)
+        } else {
+            // Clear invalid token if getUser fails
+            localStorage.removeItem("JwtToken")
         }
-        console.log(response,"response user")
+        console.log(response, "response user")
     }
+    setAppLoading && setAppLoading(false)
 }
