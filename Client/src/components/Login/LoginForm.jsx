@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useUserContext } from "../../context/userContext";
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const LoginForm = () => {
   const navigate = useNavigate()
@@ -23,9 +23,12 @@ const LoginForm = () => {
   const { form, setForm, handleOnChange } = useForm(initialState)
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const location = useLocation()
+  console.log("uselocation",location)
+  const from = location?.state?.from?.pathname || "/dashboard"
+  console.log("from",from)
   useEffect(() => {
-    userData?._id && navigate("/dashboard")
+    userData?._id && navigate(from)
   }, [userData?._id])
 
   const handleOnsubmit = async (e) => {

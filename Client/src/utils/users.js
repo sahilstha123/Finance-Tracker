@@ -10,7 +10,6 @@ export const autoLogin = async (setUser, setAppLoading) => {
             // Clear invalid token if getUser fails
             localStorage.removeItem("JwtToken")
         }
-        console.log(response, "response user")
     }
     setAppLoading && setAppLoading(false)
 }

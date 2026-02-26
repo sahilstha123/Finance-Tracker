@@ -37,7 +37,7 @@ const Header = () => {
       expanded={expanded}
     >
       <Container>
-        <Navbar.Brand as={Link} to="/" className="text-success fw-bold d-flex align-items-center gap-2">
+        <Navbar.Brand as={Link} to={isLoggedIn ? "/dashboard" : "/"} className="text-success fw-bold d-flex align-items-center gap-2">
           Finance Tracker <FaHandHoldingDollar size={24} />
         </Navbar.Brand>
 

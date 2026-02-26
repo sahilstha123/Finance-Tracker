@@ -4,7 +4,6 @@ import { userContext } from '../context/userContext'
 
 const Dashboard = () => {
   const consumeContext = useContext(userContext)
-  console.log("hi", consumeContext)
   return (
     <Container>
       Dashboard
