@@ -4,7 +4,8 @@ import Card from "react-bootstrap/Card";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Spinner from 'react-bootstrap/Spinner';
 import { useState } from 'react';
-import "./signup.css"
+import "../../style/form-common.css";
+import "./signup.css";
 import { toast } from "react-toastify";
 import { postNewUser } from '../../helpers/axioHelper';
 import { useForm } from '../../hooks/useForm';
@@ -104,7 +105,7 @@ const SignUpForm = () => {
   ];
 
   return (
-    <div className="d-flex flex-column justify-content-center h-100 px-4 ">
+    <div className="d-flex flex-column justify-content-center h-100 px-4 form-container">
       <div className="mb-4">
         <h2 className="fw-bold text-success mb-2">Create Account</h2>
         <p className="text-secondary small">Join us to manage your finances better</p>
@@ -130,7 +131,7 @@ const SignUpForm = () => {
                 name={items.name}
                 onChange={handleOnChange}
                 value={form?.[items.name] || ""}
-                className="rounded-3 border-light bg-light focus-ring focus-ring-success"
+                className="custom-form-control focus-ring focus-ring-success"
                 required
               />
             </FloatingLabel>
@@ -162,7 +163,7 @@ const SignUpForm = () => {
         <Button
           variant="success"
           type="submit"
-          className="w-100 mb-4 py-3 fw-semibold rounded-3 d-flex align-items-center justify-content-center gap-2"
+          className="w-100 mb-4 py-3 fw-semibold rounded-3 d-flex align-items-center justify-content-center gap-2 btn-primary-custom"
           disabled={isLoading}
           style={{ transition: 'all 0.3s ease' }}
         >
@@ -183,7 +184,7 @@ const SignUpForm = () => {
         </Button>
 
         <div className="text-center text-muted small">
-          Already have an account? <a href="/" className="text-decoration-none fw-bold text-success ms-1">Login</a>
+          Already have an account? <Link to="/" className="form-link ms-1">Login</Link>
         </div>
       </Form>
     </div>

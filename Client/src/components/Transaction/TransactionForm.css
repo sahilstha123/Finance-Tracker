@@ -1,0 +1,83 @@
+.transaction-form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.transaction-type-selector {
+    position: relative;
+    display: flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 14px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.type-slider {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    width: calc(50% - 4px);
+    background: #ffffff;
+    border-radius: 11px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 1;
+}
+
+.type-slider.income {
+    left: 4px;
+}
+
+.type-slider.expense {
+    left: 50%;
+}
+
+.type-btn {
+    position: relative;
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 2;
+    transition: color 0.2s ease;
+}
+
+.type-btn.active.income {
+    color: #166534;
+    /* Darker Green for better contrast */
+}
+
+.type-btn.active.expense {
+    color: #991b1b;
+    /* Darker Red for better contrast */
+}
+
+.type-btn:hover:not(.active) {
+    color: #1e293b;
+}
+
+.transaction-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+@media (max-width: 576px) {
+    .transaction-grid {
+        grid-template-columns: 1fr;
+    }
+}

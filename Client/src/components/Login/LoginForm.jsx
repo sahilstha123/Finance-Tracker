@@ -4,14 +4,15 @@ import Card from "react-bootstrap/Card";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Spinner from 'react-bootstrap/Spinner';
 import { useEffect, useState } from 'react';
-import "../signup/signup.css"
+import "../../style/form-common.css";
+import "../signup/signup.css";
 import { useForm } from '../../hooks/useForm';
 import { loginUser } from "../../helpers/axioHelper";
 import { toast } from "react-toastify";
 import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useUserContext } from "../../context/userContext";
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, Link } from "react-router-dom"
 
 const LoginForm = () => {
   const navigate = useNavigate()
@@ -24,12 +25,12 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation()
-  console.log("uselocation",location)
+
   const from = location?.state?.from?.pathname || "/dashboard"
-  console.log("from",from)
+
   useEffect(() => {
     userData?._id && navigate(from)
-  }, [userData?._id])
+  }, [userData?._id, navigate, from])
 
   const handleOnsubmit = async (e) => {
     e.preventDefault()
@@ -74,7 +75,7 @@ const LoginForm = () => {
   ];
 
   return (
-    <div className="d-flex flex-column justify-content-center h-100 px-4 px-md-5">
+    <div className="d-flex flex-column justify-content-center h-100 px-4 px-md-5 form-container">
       <div className="mb-5">
         <h2 className="display-6 fw-bold text-success mb-2">Welcome Back</h2>
         <p className="text-secondary">Please sign in to continue</p>
@@ -94,7 +95,7 @@ const LoginForm = () => {
                 name={items.name}
                 onChange={handleOnChange}
                 value={form?.[items.name] || ""}
-                className="rounded-3 border-light bg-light focus-ring focus-ring-success"
+                className="custom-form-control focus-ring focus-ring-success"
                 required
               />
             </FloatingLabel>
@@ -114,7 +115,7 @@ const LoginForm = () => {
         <Button
           variant="success"
           type="submit"
-          className="w-100 mb-4 py-3 fw-semibold rounded-3 d-flex align-items-center justify-content-center gap-2"
+          className="w-100 mb-4 py-3 fw-semibold rounded-3 d-flex align-items-center justify-content-center gap-2 btn-primary-custom"
           disabled={isLoading}
           style={{ transition: 'all 0.3s ease' }}
         >
@@ -135,7 +136,7 @@ const LoginForm = () => {
         </Button>
 
         <div className="text-center text-muted small">
-          Don't have an account? <a href="/signup" className="text-decoration-none fw-bold text-success ms-1">Sign Up</a>
+          Don't have an account? <Link to="/signup" className="form-link ms-1">Sign Up</Link>
         </div>
       </Form>
     </div>

@@ -2,17 +2,19 @@ import React from 'react'
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import TransactionForm from '../components/Transaction/TransactionForm'
+import TransactionTable from '../components/Transaction/TransactionTable'
 
 const Transaction = () => {
   return (
     <Container>
       <Row>
-        <Col md={6}>
-        <div>Form here</div>
+        <Col >
+        {/* form */}
+        <TransactionForm/>
         <hr />
-        <div>
-          table Here
-        </div>
+        {/* table */}
+        <TransactionTable/>
         </Col>
       </Row>
     </Container>
