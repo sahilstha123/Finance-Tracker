@@ -1,19 +1,31 @@
 const express = require("express")
 const errorHandler = require("./middleware/errorMiddleware")
+
+// import route models
 const userRouter = require("./routers/userRouter")
+const transactionRouter = require("./routers/transactionRouter")
 const dotenv = require("dotenv").config()
 
 const app = express()
 const cors = require("cors")
 app.use(cors())
+
+// database connection
 const connectDB = require("./config/dbconfig")
 const PORT = process.env.PORT || 8000
 connectDB()
+
+// parse Json request bodies
 app.use(express.json())
 app.get("/", (req, res) => {
     res.status(200).send("Server is running yaya ")
 })
-app.use("/api/v1/users",userRouter)
+
+// api routes
+app.use("/api/v1/users", userRouter)
+app.use("/api/v1/transactions", transactionRouter)
+
+// global error handling middle ware 
 app.use(errorHandler)
 app.listen(PORT, (error) => {
     error ? console.log(error) :
