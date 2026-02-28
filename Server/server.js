@@ -12,6 +12,7 @@ app.use(cors())
 
 // database connection
 const connectDB = require("./config/dbconfig")
+const { auth } = require("./middleware/authMiddleware")
 const PORT = process.env.PORT || 8000
 connectDB()
 
@@ -23,7 +24,7 @@ app.get("/", (req, res) => {
 
 // api routes
 app.use("/api/v1/users", userRouter)
-app.use("/api/v1/transactions", transactionRouter)
+app.use("/api/v1/transactions", auth, transactionRouter)
 
 // global error handling middle ware 
 app.use(errorHandler)
