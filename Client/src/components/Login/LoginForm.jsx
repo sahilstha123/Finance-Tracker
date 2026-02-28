@@ -25,7 +25,7 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation()
-
+  console.log("loginfrom", location)
   const from = location?.state?.from?.pathname || "/dashboard"
 
   useEffect(() => {

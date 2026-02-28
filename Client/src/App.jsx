@@ -4,7 +4,7 @@ import './App.css'
 import "./style/global.css"
 import "./style/variable.css"
 import Login from './pages/Login';
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify"
 import financialTips from "./utils/financialTips"
 import SignUp from './pages/SignUp';
@@ -19,6 +19,8 @@ import SplashScreen from './components/common/SplashScreen';
 function App() {
   const { userData, setUserData, appLoading, setAppLoading } = useUserContext()
   const [showSplash, setShowSplash] = useState(true);
+  const location = useLocation()
+  console.log("app",location)
   useEffect(() => {
     if (!userData?._id) {
       autoLogin(setUserData, setAppLoading)
