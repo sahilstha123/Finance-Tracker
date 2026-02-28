@@ -1,10 +1,16 @@
-exports.addTransaction = async (req,res,next) => {
+const { insertNewTransaction } = require("../models/transaction/transactiobModel")
 
-    const {_id} = req.userInfo
-    req.body.userId = _id
-    console.log(req.body)
-    return res.json({
-            status : "success",
-            message: "This is a transaction"
+exports.addTransaction = async (req, res, next) => {
+    
+    const transactionData = {
+        ...req.body,
+        userId: req.userInfo._id
+    }
+    const transaction = await insertNewTransaction(transactionData)
+    res.json({
+        status: "success",
+        message: "New Transaction added Successfully",
+        data: transaction
     })
+    
 }
