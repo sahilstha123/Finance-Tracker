@@ -4,15 +4,19 @@ import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import Button from 'react-bootstrap/Button'
 import { BsPlusCircle, BsArrowUpCircle, BsArrowDownCircle } from 'react-icons/bs'
+import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
 import "../../style/form-common.css"
 import "./TransactionForm.css"
+import { addNewTransaction } from '../../helpers/axioHelper'
+import { toast } from "react-toastify";
+
 
 const TransactionForm = () => {
     const initialState = {
-        type: "expense",
+        type: "income",
         title: "",
         amount: "",
-        tDate: ""
+        tdate: ""
     }
     const { form, setForm, handleOnChange } = useForm(initialState)
 
@@ -25,10 +29,25 @@ const TransactionForm = () => {
         });
     }
 
-    const handleOnSubmit = (e) => {
+    const handleOnSubmit = async (e) => {
         e.preventDefault();
-        console.log("Transaction Data:", form);
-        setForm({ ...initialState, type: form.type });
+        try {
+            const result = await addNewTransaction(form)
+            const {status, message} = result
+            toast[status](message, {
+                className: "toast-mobile",
+                autoClose: 3000,
+                style: { color: status === "success" ? "green" : "red" },
+                icon: status === "success" ? <BsCheckCircleFill className="text-success" /> : <BsExclamationTriangleFill className="text-danger" />
+            })
+        
+        if(status === "success")
+        {
+            setForm({ ...initialState, type: form.type })
+        }
+        } catch (error) {
+            toast.error("Something went wrong. Please try again.");
+        }
     }
 
     const fields = [
@@ -52,7 +71,7 @@ const TransactionForm = () => {
             label: "Transaction Date",
             required: true,
             type: "date",
-            name: "tDate",
+            name: "tdate",
             controlId: "floatingTDate"
         },
     ]
