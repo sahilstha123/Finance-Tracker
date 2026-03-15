@@ -1,3 +1,4 @@
+const apiError = require("../../utils/apiError")
 const transactionSchema = require("./transactionSchema")
 
 exports.insertNewTransaction = async(transactionData)=>{
@@ -19,4 +20,15 @@ exports.insertNewTransaction = async(transactionData)=>{
     else{
         return await transactionSchema(transactionData).save()
     }
+}
+
+exports.getTransactions = async(userId)=>{
+    if(!userId)
+    {
+        throw new apiError("UserId is required",400)
+    }
+    return transactionSchema.find({
+        userId
+    })
+    .lean()
 }
