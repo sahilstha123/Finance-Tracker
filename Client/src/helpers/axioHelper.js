@@ -23,7 +23,7 @@ const apiProcessor = async ({ method, url, data,headers }) => {
     }
 }
 
-// post new user
+// Registers a new user account.
 export const postNewUser = (data) => {
     const obj = {
         method: "post",
@@ -32,7 +32,7 @@ export const postNewUser = (data) => {
     }
     return apiProcessor(obj)
 }
-// login
+// Authenticates an existing user and returns a JWT token.
 export const loginUser = (data) =>{
     const obj = {
         method: "post",
@@ -42,7 +42,7 @@ export const loginUser = (data) =>{
     return apiProcessor(obj)
 }
 
-// get user 
+// Fetches the currently authenticated user's profile.
 export const getUser = ()=>{
     const obj = {
         method: "get",
@@ -56,7 +56,7 @@ export const getUser = ()=>{
 
 // transaction 
 
-// add new User transaction 
+// Creates a new transaction for the authenticated user.
 export const addNewTransaction = (tData)=>{
     const obj = {
         method : "post",
@@ -69,8 +69,8 @@ export const addNewTransaction = (tData)=>{
     return apiProcessor(obj)
 }
 
-// get usersTransactions
-export const getUserTransaction = ()=>{
+// Retrieves all transactions belonging to the authenticated user.
+export const fetchTransaction = ()=>{
     const obj = {
         method: "get",
         url: rootApiEP + "/transactions",
