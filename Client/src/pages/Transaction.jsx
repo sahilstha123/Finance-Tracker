@@ -7,7 +7,7 @@ import TransactionTable from '../components/Transaction/TransactionTable'
 import { useUserContext } from '../context/userContext'
 
 const Transaction = () => {
-  const {getTransactions} = useUserContext()
+  const {getTransactions, transactions} = useUserContext()
   useEffect(()=>{
     getTransactions()
   },[])
@@ -19,7 +19,7 @@ const Transaction = () => {
         <TransactionForm/>
         <hr />
         {/* table */}
-        <TransactionTable/>
+        <TransactionTable transactions={transactions}/>
         </Col>
       </Row>
     </Container>

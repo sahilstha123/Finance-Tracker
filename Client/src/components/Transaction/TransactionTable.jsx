@@ -10,9 +10,9 @@ import {
 } from 'react-icons/fa'
 import "./TransactionTable.css"
 
-const TransactionTable =  () => {
+const TransactionTable = ({ transactions }) => {
   const [filter, setFilter] = useState("All")
- 
+
   const buttons = ["All", "Credit", "Debit"]
   return (
     <div className="transaction-table-container">
@@ -56,29 +56,37 @@ const TransactionTable =  () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>01</td>
-              <td><span className="date-text">2025-3-01</span></td>
-              <td className="fw-bold text-dark">Food</td>
-              <td>
-                <span className="transaction-badge badge-credit">
-                  <FaArrowAltCircleUp />
-                  <span className="amount-text">3500</span>
-                </span>
-              </td>
-              <td>
-                <span className="transaction-badge badge-debit">
-                  <FaArrowAltCircleDown />
-                  <span className="amount-text">3500</span>
-                </span>
-              </td>
-              <td>
-                <div className="action-btns">
-                  <div className="btn-action" title='Edit'><FaRegEdit /></div>
-                  <div className="btn-action btn-delete" title='Delete'><FaTrashAlt /></div>
-                </div>
-              </td>
-            </tr>
+            {transactions.map((items, index) => (
+
+              <tr>
+                <td>{index + 1}</td>
+                <td><span className="date-text">{items.tdate}</span></td>
+                <td className="fw-bold text-dark">{items.title}</td>
+                {items.type === "income" ? (<td>
+                  <span className="transaction-badge badge-credit">
+                    <FaArrowAltCircleUp />
+                    <span className="amount-text">{items.amount}</span>
+                  </span>
+                </td>)
+                  : <td></td>}
+                {items.type === "expense" ? (
+                  (<td>
+                    <span className="transaction-badge badge-debit">
+                      <FaArrowAltCircleDown />
+                      <span className="amount-text">{items.amount}</span>
+                    </span>
+                  </td>)
+                ) : <td></td>}
+                <td>
+                  <div className="action-btns">
+                    <div className="btn-action" title='Edit'><FaRegEdit /></div>
+                    <div className="btn-action btn-delete" title='Delete'><FaTrashAlt /></div>
+                  </div>
+                </td>
+              </tr>
+
+            ))}
+
           </tbody>
         </table>
       </div>
