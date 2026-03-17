@@ -68,3 +68,15 @@ export const addNewTransaction = (tData)=>{
     }
     return apiProcessor(obj)
 }
+
+// get usersTransactions
+export const getUserTransaction = ()=>{
+    const obj = {
+        method: "get",
+        url: rootApiEP + "/transactions",
+        headers:{
+            Authorization: getAccessJwt()
+        }
+    }
+    return apiProcessor(obj)
+}

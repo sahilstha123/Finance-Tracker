@@ -10,9 +10,12 @@ import {
   FaArrowAltCircleDown
 } from 'react-icons/fa'
 import "./TransactionTable.css"
+import { getUserTransaction } from '../../helpers/axioHelper'
 
-const TransactionTable = () => {
+const TransactionTable = async () => {
   const [filter, setFilter] = useState("All")
+  const result = await getUserTransaction()
+  console.log("usersTable", result)
   const buttons = ["All", "Credit", "Debit"]
   return (
     <div className="transaction-table-container">
