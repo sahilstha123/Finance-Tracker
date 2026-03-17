@@ -12,8 +12,8 @@ import {
 import "./TransactionTable.css"
 
 const TransactionTable = () => {
-  const [filter, setFilter] = useState("all")
-  const buttons = ["All", "Credit", "debit"]
+  const [filter, setFilter] = useState("All")
+  const buttons = ["All", "Credit", "Debit"]
   return (
     <div className="transaction-table-container">
       {/* title,search and filter */}
@@ -23,7 +23,7 @@ const TransactionTable = () => {
           <FaSearch className='search-icon' />
           <input
             type="text"
-            placeholder='Search transactions....'
+            placeholder='Search transactions...'
             className='search-input' />
         </div>
 
@@ -81,6 +81,22 @@ const TransactionTable = () => {
             </tr>
           </tbody>
         </table>
+      </div>
+
+      {/* Summary Section */}
+      <div className="summary-section">
+        <div className="summary-card">
+          <span className="summary-label">Total Income</span>
+          <span className="summary-value value-credit">25000</span>
+        </div>
+        <div className="summary-card">
+          <span className="summary-label">Total Expense</span>
+          <span className="summary-value value-debit">25000</span>
+        </div>
+        <div className="summary-card">
+          <span className="summary-label">Net Balance</span>
+          <span className="summary-value ">25000</span>
+        </div>
       </div>
     </div>
 
