@@ -9,9 +9,11 @@ import "../../style/form-common.css"
 import "./TransactionForm.css"
 import { addNewTransaction } from '../../helpers/axioHelper'
 import { toast } from "react-toastify";
+import { useUserContext } from '../../context/userContext'
 
 
 const TransactionForm = () => {
+
     const initialState = {
         type: "income",
         title: "",
@@ -20,6 +22,7 @@ const TransactionForm = () => {
     }
     const { form, setForm, handleOnChange } = useForm(initialState)
 
+    const { getTransactions } = useUserContext()
     const handleTypeChange = (type) => {
         handleOnChange({
             target: {
@@ -33,18 +36,18 @@ const TransactionForm = () => {
         e.preventDefault();
         try {
             const result = await addNewTransaction(form)
-            const {status, message} = result
+            const { status, message } = result
             toast[status](message, {
                 className: "toast-mobile",
                 autoClose: 3000,
                 style: { color: status === "success" ? "green" : "red" },
                 icon: status === "success" ? <BsCheckCircleFill className="text-success" /> : <BsExclamationTriangleFill className="text-danger" />
             })
-        
-        if(status === "success")
-        {
-            setForm({ ...initialState, type: form.type })
-        }
+
+            if (status === "success") {
+                await getTransactions()
+                setForm({ ...initialState, type: form.type })
+            }
         } catch (error) {
             toast.error("Something went wrong. Please try again.");
         }
