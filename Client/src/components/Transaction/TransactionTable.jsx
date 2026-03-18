@@ -14,12 +14,27 @@ import { useUserContext } from '../../context/userContext'
 const TransactionTable = () => {
   const { transactions } = useUserContext()
   const [filter, setFilter] = useState("All")
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 5
   const buttons = ["All", "Credit", "Debit"]
   const filteredTransactions = transactions.filter((item) => {
     if (filter === "Credit") return item.type === "income"
     if (filter === "Debit") return item.type === "expense"
     return true
   })
+
+  // pagination logic 
+  const totalItems = filteredTransactions.length
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const currentItems = filteredTransactions.slice(startIndex, startIndex + itemsPerPage)
+  const handleFilterChange = (item) => {
+    setFilter(item)
+    setCurrentPage(1)
+  }
+  const handlePageChange = (page) => {
+    setCurrentPage(page)
+  }
   const totalIncome = transactions.reduce((acc, curr) => curr.type === "income" ? acc + Number(curr.amount) : acc, 0)
   const totalExpense = transactions.reduce((acc, curr) => curr.type === "expense" ? acc + Number(curr.amount) : acc, 0)
   const netBalance = totalIncome - totalExpense
@@ -48,7 +63,7 @@ const TransactionTable = () => {
               <button
                 key={item}
                 className={`btn-filter ${filter === item ? "active" : ""}`}
-                onClick={() => setFilter(item)}
+                onClick={() => handleFilterChange(item)}
               >
                 {item}
               </button>
@@ -71,10 +86,10 @@ const TransactionTable = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredTransactions.map((items, index) => (
+            {currentItems.map((items, index) => (
 
               <tr key={items._id || index}>
-                <td>{index + 1}</td>
+                <td>{startIndex + index + 1}</td>
                 <td><span className="date-text">{items.tdate ? new Date(items.tdate).toLocaleDateString() : "-"}</span></td>
                 <td className="fw-bold text-dark">{items.title}</td>
                 <td>
@@ -108,6 +123,29 @@ const TransactionTable = () => {
           </tbody>
         </table>
       </div>
+
+      {/* pagination Control */}
+      {totalPages > 1 && (
+        <div className="pagination-container">
+          <button className="btn-pagination"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >Previous</button>
+          <div className="page-numbers">
+            {[...Array(totalPages)].map((_, i) => (
+              <button className={`page-number ${currentPage === i + 1 ? "active" : ""}`}>
+                {i + 1}
+              </button>
+            ))}
+          </div>
+          <button className="btn-pagination"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       {/* Summary Section */}
       <div className="summary-section">
