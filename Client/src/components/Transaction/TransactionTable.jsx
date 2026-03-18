@@ -10,10 +10,14 @@ import {
 } from 'react-icons/fa'
 import "./TransactionTable.css"
 
-const TransactionTable = ({ transactions }) => {
+const TransactionTable = ({ transactions =[] }) => {
   const [filter, setFilter] = useState("All")
-
   const buttons = ["All", "Credit", "Debit"]
+  const filteredTransactions = transactions.filter((item)=>{
+    if(filter === "All") return true;
+    if(filter === "Credit") return item.type = "income"
+    if(filter === "Debit") return item.type = "expense"
+  })
   return (
     <div className="transaction-table-container">
       {/* title,search and filter */}
@@ -56,27 +60,27 @@ const TransactionTable = ({ transactions }) => {
             </tr>
           </thead>
           <tbody>
-            {transactions.map((items, index) => (
+            {filteredTransactionss.map((items, index) => (
 
-              <tr>
+              <tr key={items._id || index}>
                 <td>{index + 1}</td>
-                <td><span className="date-text">{items.tdate}</span></td>
+                <td><span className="date-text">{items.tdate ? new Date(item.tdate).toLocaleDateString():"-"}</span></td>
                 <td className="fw-bold text-dark">{items.title}</td>
-                {items.type === "income" ? (<td>
+                {items.type === "income" && (<td>
                   <span className="transaction-badge badge-credit">
                     <FaArrowAltCircleUp />
                     <span className="amount-text">{items.amount}</span>
                   </span>
                 </td>)
-                  : <td></td>}
-                {items.type === "expense" ? (
+                 }
+                {items.type === "expense" && (
                   (<td>
                     <span className="transaction-badge badge-debit">
                       <FaArrowAltCircleDown />
                       <span className="amount-text">{items.amount}</span>
                     </span>
                   </td>)
-                ) : <td></td>}
+                ) }
                 <td>
                   <div className="action-btns">
                     <div className="btn-action" title='Edit'><FaRegEdit /></div>
