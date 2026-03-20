@@ -5,21 +5,24 @@ import Col from "react-bootstrap/Col"
 import TransactionForm from '../components/Transaction/TransactionForm'
 import TransactionTable from '../components/Transaction/TransactionTable'
 import { useUserContext } from '../context/userContext'
+import { CustomModal } from '../components/ui/CustomModal'
 
 const Transaction = () => {
-  const {getTransactions} = useUserContext()
-  useEffect(()=>{
+  const { getTransactions } = useUserContext()
+  useEffect(() => {
     getTransactions()
-  },[])
+  }, [])
   return (
     <Container>
       <Row>
         <Col >
-        {/* form */}
-        <TransactionForm/>
-        <hr />
-        {/* table */}
-        <TransactionTable />
+          {/* form */}
+          <CustomModal>
+            <TransactionForm />
+          </CustomModal>
+          <hr />
+          {/* table */}
+          <TransactionTable />
         </Col>
       </Row>
     </Container>

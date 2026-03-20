@@ -12,7 +12,7 @@ import { BsPlusCircle } from 'react-icons/bs'
 import { useUserContext } from '../../context/userContext'
 
 const TransactionTable = () => {
-  const { transactions } = useUserContext()
+  const { transactions,toggleModal } = useUserContext()
   const [filter, setFilter] = useState("All")
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1)
@@ -49,7 +49,7 @@ const TransactionTable = () => {
   return (
     <div className="transaction-table-container">
       <div className="button-wrapper">
-        <button className='add-new' >
+        <button className='add-new'onClick={()=>toggleModal(true)} >
           <BsPlusCircle />
           Add New Transactions
         </button>

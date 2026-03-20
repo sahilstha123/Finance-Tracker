@@ -22,7 +22,7 @@ const TransactionForm = () => {
     }
     const { form, setForm, handleOnChange } = useForm(initialState)
 
-    const { getTransactions } = useUserContext()
+    const { getTransactions,toggleModal } = useUserContext()
     const handleTypeChange = (type) => {
         handleOnChange({
             target: {
@@ -45,9 +45,11 @@ const TransactionForm = () => {
             })
 
             if (status === "success") {
+                setForm({ ...initialState, type: form.type })
                 // to update the table when form is submission
                 await getTransactions()
-                setForm({ ...initialState, type: form.type })
+                // close the modal
+                toggleModal(false)
             }
         } catch (error) {
             toast.error("Something went wrong. Please try again.");
