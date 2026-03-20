@@ -45,6 +45,7 @@ const TransactionForm = () => {
             })
 
             if (status === "success") {
+                // to update the table when form is submission
                 await getTransactions()
                 setForm({ ...initialState, type: form.type })
             }

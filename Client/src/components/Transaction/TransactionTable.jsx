@@ -14,13 +14,21 @@ import { useUserContext } from '../../context/userContext'
 const TransactionTable = () => {
   const { transactions } = useUserContext()
   const [filter, setFilter] = useState("All")
+  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
   const buttons = ["All", "Credit", "Debit"]
+  const queryItems = searchQuery.toLowerCase() 
+
   const filteredTransactions = transactions.filter((item) => {
-    if (filter === "Credit") return item.type === "income"
-    if (filter === "Debit") return item.type === "expense"
-    return true
+    const matchesFilter =
+      filter === "Credit" ? item.type === "income" :
+        filter === "Debit" ? item.type === "expense" :
+          true
+
+    const matchesItems = item.title?.toLowerCase().includes(queryItems)
+
+    return matchesFilter && matchesItems
   })
 
   // pagination logic 
@@ -54,7 +62,11 @@ const TransactionTable = () => {
           <input
             type="text"
             placeholder='Search transactions...'
-            className='search-input' />
+            className='search-input'
+            onChange={(e) => {
+              setSearchQuery(e.target.value)
+              setCurrentPage(1)
+            }} />
         </div>
 
         <div className="filter-group">
