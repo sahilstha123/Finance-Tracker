@@ -32,3 +32,8 @@ exports.getTransactions = async(userId)=>{
     })
     .lean()
 }
+// delete query
+exports.deleteTransactions = (userId, idsToDelete)=>{
+
+    return transactionSchema.deleteMany({userId, _id:{$in: idsToDelete}})
+}
