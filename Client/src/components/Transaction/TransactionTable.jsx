@@ -7,18 +7,19 @@ import {
   FaArrowAltCircleDown
 } from 'react-icons/fa'
 import "./TransactionTable.css"
-
+import Form from "react-bootstrap/Form";
 import { BsPlusCircle } from 'react-icons/bs'
 import { useUserContext } from '../../context/userContext'
 
 const TransactionTable = () => {
-  const { transactions,toggleModal } = useUserContext()
+  const { transactions, toggleModal } = useUserContext()
+  const [idsToDelete, setIdsToDelete] = useState([])
   const [filter, setFilter] = useState("All")
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
   const buttons = ["All", "Credit", "Debit"]
-  const queryItems = searchQuery.toLowerCase() 
+  const queryItems = searchQuery.toLowerCase()
 
   const filteredTransactions = transactions.filter((item) => {
     const matchesFilter =
@@ -46,10 +47,31 @@ const TransactionTable = () => {
   const totalIncome = transactions.reduce((acc, curr) => curr.type === "income" ? acc + Number(curr.amount) : acc, 0)
   const totalExpense = transactions.reduce((acc, curr) => curr.type === "expense" ? acc + Number(curr.amount) : acc, 0)
   const netBalance = totalIncome - totalExpense
+
+  const handleOnSelect = (e) => {
+    const { checked, value } = e.target
+    if (value === "all") {
+       const allCurrentIds = currentItems.map(item => item._id)
+      if (checked) {
+        // Add all current page items' IDs to idsToDelete, avoiding duplicates
+     
+        setIdsToDelete(prev => [...new Set([...prev,...allCurrentIds])])
+      } else {
+        // Remove all current page items' IDs from idsToDelete
+       
+        setIdsToDelete(prev => prev.filter(id => !allCurrentIds.includes(id)))
+      }
+      return
+    }
+    checked
+      ? setIdsToDelete(prev => [...prev, value])
+      : setIdsToDelete(prev => prev.filter((id) => id !== value))
+  }
+  console.log(idsToDelete)
   return (
     <div className="transaction-table-container">
       <div className="button-wrapper">
-        <button className='add-new'onClick={()=>toggleModal(true)} >
+        <button className='add-new' onClick={() => toggleModal(true)} >
           <BsPlusCircle />
           Add New Transactions
         </button>
@@ -84,6 +106,14 @@ const TransactionTable = () => {
         </div>
       </div>
 
+      <div className="select-all-wrapper">
+        <Form.Check
+          label="Select All (current page)"
+          onChange={handleOnSelect}
+          value={"all"}
+          checked={currentItems.length > 0 && currentItems.every(item => idsToDelete.includes(item._id))}
+        />
+      </div>
       {/* Table Section */}
       <div className="table-responsive">
         <table className="custom-table">
@@ -102,7 +132,10 @@ const TransactionTable = () => {
 
               <tr key={items._id || index}>
                 <td>{startIndex + index + 1}</td>
-                <td><span className="date-text">{items.tdate ? new Date(items.tdate).toLocaleDateString() : "-"}</span></td>
+                <td><Form.Check type="checkbox" id={`check-${items._id || index}`} label={
+                  <span className="date-text">{items.tdate ? new Date(items.tdate).toLocaleDateString() : "-"}</span>
+                } onChange={handleOnSelect} value={items._id} checked={idsToDelete.includes(items._id)} />
+                </td>
                 <td className="fw-bold text-dark">{items.title}</td>
                 <td>
                   {items.type === "income" &&
