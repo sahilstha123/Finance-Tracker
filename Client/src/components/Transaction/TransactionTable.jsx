@@ -163,6 +163,7 @@ const TransactionTable = () => {
                       className="btn-action btn-delete"
                       title='Delete'
                       onClick={() => {
+                        console.log("Trash icon clicked, triggering modal...");
                         toggleModal(true, "delete");
                       }}
                     >
@@ -178,12 +179,29 @@ const TransactionTable = () => {
         </table>
       </div>
       {/* delete Section*/}
-      {idsToDelete.length > 0 &&
-
-        <div className='delete-button'>
-          <Button variant='danger'>Delete {idsToDelete.length} transactions</Button>
+      {idsToDelete.length > 0 && (
+        <div className="bulk-delete-panel">
+          <div className="bulk-delete-info">
+            <span className="selection-count">
+              <strong>{idsToDelete.length}</strong> transactions selected
+            </span>
+            <button
+              className="btn-clear-selection"
+              onClick={() => setIdsToDelete([])}
+            >
+              Clear All Selection
+            </button>
+          </div>
+          <Button
+            variant='danger'
+            className='btn-bulk-delete-main'
+            onClick={() => toggleModal(true, "delete")}
+          >
+            <FaTrashAlt className='me-2' />
+            Delete transactions
+          </Button>
         </div>
-      }
+      )}
 
       {/* pagination Control */}
       {totalPages > 1 && (
