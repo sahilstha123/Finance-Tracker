@@ -7,8 +7,12 @@ export const UserProvider = ({ children }) => {
     const [userData, setUserData] = useState({})
     const [appLoading, setAppLoading] = useState(true)
     const [transactions, setTransactions] = useState([])
+    const [modalType, setModalType] = useState("add")
     const [show, setShow] = useState(false);
-    const toggleModal = (value) => setShow(value)
+    const toggleModal = (value, type = "add") => {
+        setShow(value)
+        setModalType(type)
+    }
 
     const getTransactions = async () => {
         // call axio helper to call api
@@ -19,7 +23,7 @@ export const UserProvider = ({ children }) => {
         <userContext.Provider value={{
             userData, setUserData, appLoading,
             setAppLoading, transactions, getTransactions,
-            show, toggleModal
+            show, toggleModal,modalType
         }}>
             {children}
         </userContext.Provider>
