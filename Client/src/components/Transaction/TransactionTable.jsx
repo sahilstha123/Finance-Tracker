@@ -8,6 +8,7 @@ import {
 } from 'react-icons/fa'
 import "./TransactionTable.css"
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button"
 import { BsPlusCircle } from 'react-icons/bs'
 import { useUserContext } from '../../context/userContext'
 
@@ -51,14 +52,14 @@ const TransactionTable = () => {
   const handleOnSelect = (e) => {
     const { checked, value } = e.target
     if (value === "all") {
-       const allCurrentIds = currentItems.map(item => item._id)
+      const allCurrentIds = currentItems.map(item => item._id)
       if (checked) {
         // Add all current page items' IDs to idsToDelete, avoiding duplicates
-     
-        setIdsToDelete(prev => [...new Set([...prev,...allCurrentIds])])
+
+        setIdsToDelete(prev => [...new Set([...prev, ...allCurrentIds])])
       } else {
         // Remove all current page items' IDs from idsToDelete
-       
+
         setIdsToDelete(prev => prev.filter(id => !allCurrentIds.includes(id)))
       }
       return
@@ -158,7 +159,7 @@ const TransactionTable = () => {
                 <td>
                   <div className="action-btns">
                     <div className="btn-action" title='Edit'><FaRegEdit /></div>
-                    <div className="btn-action btn-delete" title='Delete'><FaTrashAlt /></div>
+                    <div className="btn-action btn-delete" title='Delete' ><FaTrashAlt /></div>
                   </div>
                 </td>
               </tr>
@@ -168,6 +169,13 @@ const TransactionTable = () => {
           </tbody>
         </table>
       </div>
+      {/* delete Section*/}
+      {idsToDelete.length > 0 &&
+
+        <div className='delete-button'>
+          <Button variant='danger'>Delete {idsToDelete.length} transactions</Button>
+        </div>
+      }
 
       {/* pagination Control */}
       {totalPages > 1 && (
@@ -207,7 +215,10 @@ const TransactionTable = () => {
           <span className={`summary-value ${netBalance >= 0 ? 'value-credit' : 'value-debit'}`}>{netBalance}</span>
         </div>
       </div>
+
+
     </div>
+
   )
 }
 export default TransactionTable

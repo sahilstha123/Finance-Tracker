@@ -16,9 +16,11 @@ export const UserProvider = ({ children }) => {
         status === "success" && setTransactions(data)
     }
     return (
-        <userContext.Provider value={{ userData, setUserData, appLoading, 
-        setAppLoading, transactions, getTransactions,
-        show, toggleModal }}>
+        <userContext.Provider value={{
+            userData, setUserData, appLoading,
+            setAppLoading, transactions, getTransactions,
+            show, toggleModal
+        }}>
             {children}
         </userContext.Provider>
     )
