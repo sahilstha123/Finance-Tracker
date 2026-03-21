@@ -72,7 +72,7 @@ const TransactionTable = () => {
   return (
     <div className="transaction-table-container">
       <div className="button-wrapper">
-        <button className='add-new' onClick={() => toggleModal(true)} >
+        <button className='add-new' onClick={() => toggleModal(true, "add")} >
           <BsPlusCircle />
           Add New Transactions
         </button>
@@ -159,7 +159,15 @@ const TransactionTable = () => {
                 <td>
                   <div className="action-btns">
                     <div className="btn-action" title='Edit'><FaRegEdit /></div>
-                    <div className="btn-action btn-delete" title='Delete' ><FaTrashAlt /></div>
+                    <button
+                      className="btn-action btn-delete"
+                      title='Delete'
+                      onClick={() => {
+                        toggleModal(true, "delete");
+                      }}
+                    >
+                      <FaTrashAlt />
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -186,7 +194,11 @@ const TransactionTable = () => {
           >Previous</button>
           <div className="page-numbers">
             {[...Array(totalPages)].map((_, i) => (
-              <button className={`page-number ${currentPage === i + 1 ? "active" : ""}`}>
+              <button
+                key={i + 1}
+                className={`page-number ${currentPage === i + 1 ? "active" : ""}`}
+                onClick={() => handlePageChange(i + 1)}
+              >
                 {i + 1}
               </button>
             ))}

@@ -4,7 +4,7 @@ import { FaExclamationTriangle } from 'react-icons/fa'
 import { useUserContext } from '../../context/userContext'
 
 const DeleteConfirmModalContent = () => {
-    const { idsToConfirm, toggleModal } = useUserContext()
+    const {  toggleModal } = useUserContext()
 
     return (
         <div className="text-center py-3">
@@ -13,7 +13,7 @@ const DeleteConfirmModalContent = () => {
             </div>
             <h3 className="fw-bold mb-3">Delete Transaction?</h3>
             <p className="text-muted mb-4 px-4">
-                Are you sure you want to delete <strong>{idsToConfirm.length}</strong> transaction(s)?
+                Are you sure you want to delete this transaction?
                 This action is permanent and cannot be undone.
             </p>
 

@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
     const [transactions, setTransactions] = useState([])
     const [modalType, setModalType] = useState("add")
     const [show, setShow] = useState(false);
+
     const toggleModal = (value, type = "add") => {
         setShow(value)
         setModalType(type)
@@ -23,7 +24,7 @@ export const UserProvider = ({ children }) => {
         <userContext.Provider value={{
             userData, setUserData, appLoading,
             setAppLoading, transactions, getTransactions,
-            show, toggleModal,modalType
+            show, toggleModal, modalType
         }}>
             {children}
         </userContext.Provider>

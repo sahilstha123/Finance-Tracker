@@ -9,7 +9,7 @@ import { useUserContext } from '../context/userContext'
 import { CustomModal } from '../components/ui/CustomModal'
 
 const Transaction = () => {
-  const { getTransactions } = useUserContext()
+  const { getTransactions, modalType } = useUserContext()
   useEffect(() => {
     getTransactions()
   }, [])
@@ -19,9 +19,9 @@ const Transaction = () => {
         <Col >
           {/* form */}
           <CustomModal>
-            <TransactionForm />
-            
-             {/* <DeleteConfirmModalContent/> */}
+            {modalType === "add"
+              ? <TransactionForm />
+              : <DeleteConfirmModalContent />}
           </CustomModal>
           <hr />
           {/* table */}
