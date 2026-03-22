@@ -174,44 +174,15 @@
 /* Bulk Delete Panel */
 .bulk-delete-panel {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    background: var(--danger-bg);
-    border: 1px solid rgba(220, 38, 38, 0.1);
+   
     padding: 1rem 2rem;
     border-radius: 16px;
     margin: 1.5rem 0;
     animation: slideDown 0.3s ease-out;
 }
 
-.bulk-delete-info {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.selection-count {
-    color: var(--danger-color);
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-.btn-clear-selection {
-    background: transparent;
-    border: none;
-    color: var(--text-slate-500);
-    font-size: 0.9rem;
-    font-weight: 700;
-    cursor: pointer;
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
-    transition: all 0.2s;
-}
-
-.btn-clear-selection:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: var(--text-slate-800);
-}
 
 .btn-bulk-delete-main:hover {
     transform: translateY(-2px);
