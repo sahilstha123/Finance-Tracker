@@ -11,14 +11,17 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button"
 import { BsPlusCircle } from 'react-icons/bs'
 import { useUserContext } from '../../context/userContext'
+import { toast } from "react-toastify";
 
-const TransactionTable = () => {
-  const { transactions, toggleModal } = useUserContext()
-  const [idsToDelete, setIdsToDelete] = useState([])
+
+const TransactionTable = ({ limit, hideFilters = false }) => {
+  const { transactions, toggleModal,
+    idsToDelete, setIdsToDelete,
+    totalIncome, totalExpense, netBalance } = useUserContext()
   const [filter, setFilter] = useState("All")
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 5
+  const itemsPerPage = limit || 5
   const buttons = ["All", "Credit", "Debit"]
   const queryItems = searchQuery.toLowerCase()
 
@@ -33,11 +36,18 @@ const TransactionTable = () => {
     return matchesFilter && matchesItems
   })
 
+  // Sort by date descending to show most recent first
+  const sortedTransactions = [...filteredTransactions].sort((a, b) => new Date(b.tdate) - new Date(a.tdate))
+
   // pagination logic 
-  const totalItems = filteredTransactions.length
+  const totalItems = sortedTransactions.length
   const totalPages = Math.ceil(totalItems / itemsPerPage)
   const startIndex = (currentPage - 1) * itemsPerPage
-  const currentItems = filteredTransactions.slice(startIndex, startIndex + itemsPerPage)
+  const currentItems = sortedTransactions.slice(startIndex, startIndex + itemsPerPage)
+
+  // If limit is provided, we only show one page
+  const displayItems = limit ? sortedTransactions.slice(0, limit) : currentItems
+
   const handleFilterChange = (item) => {
     setFilter(item)
     setCurrentPage(1)
@@ -45,22 +55,15 @@ const TransactionTable = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page)
   }
-  const totalIncome = transactions.reduce((acc, curr) => curr.type === "income" ? acc + Number(curr.amount) : acc, 0)
-  const totalExpense = transactions.reduce((acc, curr) => curr.type === "expense" ? acc + Number(curr.amount) : acc, 0)
-  const netBalance = totalIncome - totalExpense
 
   const handleOnSelect = (e) => {
     const { checked, value } = e.target
     if (value === "all") {
-      const allCurrentIds = currentItems.map(item => item._id)
+      const allDisplayIds = displayItems.map(item => item._id)
       if (checked) {
-        // Add all current page items' IDs to idsToDelete, avoiding duplicates
-
-        setIdsToDelete(prev => [...new Set([...prev, ...allCurrentIds])])
+        setIdsToDelete(prev => [...new Set([...prev, ...allDisplayIds])])
       } else {
-        // Remove all current page items' IDs from idsToDelete
-
-        setIdsToDelete(prev => prev.filter(id => !allCurrentIds.includes(id)))
+        setIdsToDelete(prev => prev.filter(id => !allDisplayIds.includes(id)))
       }
       return
     }
@@ -68,53 +71,57 @@ const TransactionTable = () => {
       ? setIdsToDelete(prev => [...prev, value])
       : setIdsToDelete(prev => prev.filter((id) => id !== value))
   }
-  console.log(idsToDelete)
+
   return (
     <div className="transaction-table-container">
-      <div className="button-wrapper">
-        <button className='add-new' onClick={() => toggleModal(true, "add")} >
-          <BsPlusCircle />
-          Add New Transactions
-        </button>
-      </div>
-      {/* title,search and filter */}
-      <div className="table-top-bar">
-        <h3>Transactions</h3>
-        <div className="search-box">
-          <FaSearch className='search-icon' />
-          <input
-            type="text"
-            placeholder='Search transactions...'
-            className='search-input'
-            onChange={(e) => {
-              setSearchQuery(e.target.value)
-              setCurrentPage(1)
-            }} />
-        </div>
+      {!hideFilters && (
+        <>
+          <div className="button-wrapper">
+            <button className='add-new' onClick={() => toggleModal(true, "add")} >
+              <BsPlusCircle />
+              Add New Transactions
+            </button>
+          </div>
+          <div className="table-top-bar">
+            <h3>Transactions</h3>
+            <div className="search-box">
+              <FaSearch className='search-icon' />
+              <input
+                type="text"
+                placeholder='Search transactions...'
+                className='search-input'
+                onChange={(e) => {
+                  setSearchQuery(e.target.value)
+                  setCurrentPage(1)
+                }} />
+            </div>
 
-        <div className="filter-group">
-          {
-            buttons.map((item) => (
-              <button
-                key={item}
-                className={`btn-filter ${filter === item ? "active" : ""}`}
-                onClick={() => handleFilterChange(item)}
-              >
-                {item}
-              </button>
-            ))
-          }
-        </div>
-      </div>
+            <div className="filter-group">
+              {
+                buttons.map((item) => (
+                  <button
+                    key={item}
+                    className={`btn-filter ${filter === item ? "active" : ""}`}
+                    onClick={() => handleFilterChange(item)}
+                  >
+                    {item}
+                  </button>
+                ))
+              }
+            </div>
+          </div>
 
-      <div className="select-all-wrapper">
-        <Form.Check
-          label="Select All (current page)"
-          onChange={handleOnSelect}
-          value={"all"}
-          checked={currentItems.length > 0 && currentItems.every(item => idsToDelete.includes(item._id))}
-        />
-      </div>
+          <div className="select-all-wrapper">
+            <Form.Check
+              label="Select All (current page)"
+              onChange={handleOnSelect}
+              value={"all"}
+              checked={displayItems.length > 0 && displayItems.every(item => idsToDelete.includes(item._id))}
+            />
+          </div>
+        </>
+      )}
+
       {/* Table Section */}
       <div className="table-responsive">
         <table className="custom-table">
@@ -125,17 +132,21 @@ const TransactionTable = () => {
               <th>Title</th>
               <th>Credit</th>
               <th>Debit</th>
-              <th>Actions</th>
+              {!hideFilters && <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((items, index) => (
-
+            {displayItems.map((items, index) => (
               <tr key={items._id || index}>
                 <td>{startIndex + index + 1}</td>
-                <td><Form.Check type="checkbox" id={`check-${items._id || index}`} label={
-                  <span className="date-text">{items.tdate ? new Date(items.tdate).toLocaleDateString() : "-"}</span>
-                } onChange={handleOnSelect} value={items._id} checked={idsToDelete.includes(items._id)} />
+                <td>
+                  {!hideFilters ? (
+                    <Form.Check type="checkbox" id={`check-${items._id || index}`} label={
+                      <span className="date-text">{items.tdate ? new Date(items.tdate).toLocaleDateString() : "-"}</span>
+                    } onChange={handleOnSelect} value={items._id} checked={idsToDelete.includes(items._id)} />
+                  ) : (
+                    <span className="date-text">{items.tdate ? new Date(items.tdate).toLocaleDateString() : "-"}</span>
+                  )}
                 </td>
                 <td className="fw-bold text-dark">{items.title}</td>
                 <td>
@@ -148,7 +159,6 @@ const TransactionTable = () => {
                 </td>
                 <td>
                   {items.type === "expense" && (
-
                     <span className="transaction-badge badge-debit">
                       <FaArrowAltCircleDown />
                       <span className="amount-text">{items.amount}</span>
@@ -156,37 +166,37 @@ const TransactionTable = () => {
                   )}
                 </td>
 
-                <td>
-                  <div className="action-btns">
-                    <div className="btn-action" title='Edit'><FaRegEdit /></div>
-                    <button
-                      className="btn-action btn-delete"
-                      title='Delete'
-                      onClick={() => {
-                        console.log("Trash icon clicked, triggering modal...");
-                        toggleModal(true, "delete");
-                      }}
-                    >
-                      <FaTrashAlt />
-                    </button>
-                  </div>
-                </td>
+                {!hideFilters && (
+                  <td>
+                    <div className="action-btns">
+                      <div className="btn-action" title='Edit'><FaRegEdit /></div>
+                      <button
+                        className="btn-action btn-delete"
+                        title='Delete'
+                        onClick={() => {
+                          setIdsToDelete([items._id]);
+                          toggleModal(true, "delete");
+                        }}
+                      >
+                        <FaTrashAlt />
+                      </button>
+                    </div>
+                  </td>
+                )}
               </tr>
-
             ))}
-
           </tbody>
         </table>
       </div>
-      {/* delete Section*/}
-      {idsToDelete.length > 0 && (
+
+      {!hideFilters && idsToDelete.length > 0 && (
         <div className="bulk-delete-panel">
-
-
           <Button
             variant='danger'
             className='btn-bulk-delete-main'
-            onClick={() => toggleModal(true, "delete")}
+            onClick={() => {
+              toggleModal(true, "delete");
+            }}
           >
             <FaTrashAlt className='me-2' />
             Delete transactions
@@ -194,8 +204,7 @@ const TransactionTable = () => {
         </div>
       )}
 
-      {/* pagination Control */}
-      {totalPages > 1 && (
+      {!hideFilters && totalPages > 1 && !limit && (
         <div className="pagination-container">
           <button className="btn-pagination"
             onClick={() => handlePageChange(currentPage - 1)}
@@ -221,25 +230,24 @@ const TransactionTable = () => {
         </div>
       )}
 
-      {/* Summary Section */}
-      <div className="summary-section">
-        <div className="summary-card">
-          <span className="summary-label">Total Income</span>
-          <span className="summary-value value-credit">{totalIncome}</span>
+      {/* Summary Section is redundant on dashboard, but we'll keep it for general use if not on dashboard/limit */}
+      {!limit && (
+        <div className="summary-section">
+          <div className="summary-card">
+            <span className="summary-label">Total Income</span>
+            <span className="summary-value value-credit">{totalIncome}</span>
+          </div>
+          <div className="summary-card">
+            <span className="summary-label">Total Expense</span>
+            <span className="summary-value value-debit">{totalExpense}</span>
+          </div>
+          <div className="summary-card">
+            <span className="summary-label">Net Balance</span>
+            <span className={`summary-value ${netBalance >= 0 ? 'value-credit' : 'value-debit'}`}>{netBalance}</span>
+          </div>
         </div>
-        <div className="summary-card">
-          <span className="summary-label">Total Expense</span>
-          <span className="summary-value value-debit">{totalExpense}</span>
-        </div>
-        <div className="summary-card">
-          <span className="summary-label">Net Balance</span>
-          <span className={`summary-value ${netBalance >= 0 ? 'value-credit' : 'value-debit'}`}>{netBalance}</span>
-        </div>
-      </div>
-
-
+      )}
     </div>
-
   )
 }
 export default TransactionTable

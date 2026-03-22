@@ -3,34 +3,37 @@ import Button from 'react-bootstrap/Button'
 import { FaExclamationTriangle } from 'react-icons/fa'
 import { useUserContext } from '../../context/userContext'
 
+import "./DeleteConfirmModalContent.css";
+
 const DeleteConfirmModalContent = () => {
-    const {  toggleModal } = useUserContext()
+    const { toggleModal, handleOnDelete, setIdsToDelete } = useUserContext()
 
     return (
-        <div className="text-center py-3">
-            <div className="mb-4">
-                <FaExclamationTriangle className="text-danger" style={{ fontSize: '4rem' }} />
+        <div className="delete-modal-container text-center">
+            <div className="delete-icon-wrapper">
+                <FaExclamationTriangle className="text-danger delete-icon" />
             </div>
-            <h3 className="fw-bold mb-3">Delete Transaction?</h3>
-            <p className="text-muted mb-4 px-4">
+            <h3 className="delete-title">Delete Transaction?</h3>
+            <p className="delete-text">
                 Are you sure you want to delete this transaction?
                 This action is permanent and cannot be undone.
             </p>
 
-            <div className="d-flex justify-content-center gap-3">
+            <div className="delete-actions">
                 <Button
                     variant="light"
-                    className="px-4 py-2 fw-bold text-slate-600 rounded-pill shadow-sm"
-                    onClick={() => toggleModal(false)}
+                    className="btn-modal text-slate-600"
+                    onClick={() => {
+                        setIdsToDelete([]);
+                        toggleModal(false);
+                    }}
                 >
                     No, Keep It
                 </Button>
                 <Button
                     variant="danger"
-                    className="px-4 py-2 fw-bold rounded-pill shadow-sm"
-                    onClick={() => {
-                        toggleModal(false)
-                    }}
+                    className="btn-modal"
+                    onClick={handleOnDelete}
                 >
                     Yes, Delete
                 </Button>

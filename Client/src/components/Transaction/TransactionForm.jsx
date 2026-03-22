@@ -3,6 +3,7 @@ import { useForm } from '../../hooks/useForm'
 import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import Button from 'react-bootstrap/Button'
+import Spinner from 'react-bootstrap/Spinner';
 import { BsPlusCircle, BsArrowUpCircle, BsArrowDownCircle } from 'react-icons/bs'
 import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
 import "../../style/form-common.css"
@@ -22,7 +23,7 @@ const TransactionForm = () => {
     }
     const { form, setForm, handleOnChange } = useForm(initialState)
 
-    const { getTransactions,toggleModal } = useUserContext()
+    const { getTransactions, toggleModal, isLoading, setIsLoading } = useUserContext()
     const handleTypeChange = (type) => {
         handleOnChange({
             target: {
@@ -32,8 +33,13 @@ const TransactionForm = () => {
         });
     }
 
+    /**
+     * Handles transaction submission.
+     * On success, refreshes the transaction list and closes the modal.
+     */
     const handleOnSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             const result = await addNewTransaction(form)
             const { status, message } = result
@@ -46,13 +52,15 @@ const TransactionForm = () => {
 
             if (status === "success") {
                 setForm({ ...initialState, type: form.type })
-                // to update the table when form is submission
+                // Update the table after successful submission
                 await getTransactions()
-                // close the modal
+                // Close the modal upon success
                 toggleModal(false)
             }
         } catch (error) {
             toast.error("Something went wrong. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -137,9 +145,25 @@ const TransactionForm = () => {
                     variant="success"
                     type="submit"
                     className="w-100 mt-3 py-3 fw-semibold btn-primary-custom d-flex align-items-center justify-content-center gap-2"
+                    disabled={isLoading}
                 >
-                    <BsPlusCircle size={20} />
-                    Add Transaction
+                    {isLoading ? (
+                        <>
+                            <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            />
+                            <span>Adding...</span>
+                        </>
+                    ) : (
+                        <>
+                            <BsPlusCircle size={20} />
+                            Add Transaction
+                        </>
+                    )}
                 </Button>
             </Form>
         </div>

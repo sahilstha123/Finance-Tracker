@@ -1,10 +1,10 @@
 import axios from "axios"
 const rootApiEP = "http://localhost:8000/api/v1"
 
-const getAccessJwt = ()=>{
+const getAccessJwt = () => {
     return localStorage.getItem("JwtToken")
 }
-const apiProcessor = async ({ method, url, data,headers }) => {
+const apiProcessor = async ({ method, url, data, headers }) => {
     try {
         const response = await axios({
             method,
@@ -12,10 +12,10 @@ const apiProcessor = async ({ method, url, data,headers }) => {
             data,
             headers
         })
-         return response.data;
+        return response.data;
     }
     catch (error) {
-        console.error("error",error.response)
+        console.error("error", error.response)
         return {
             status: "error",
             message: error?.response?.data?.message || error?.message
@@ -33,7 +33,7 @@ export const postNewUser = (data) => {
     return apiProcessor(obj)
 }
 // Authenticates an existing user and returns a JWT token.
-export const loginUser = (data) =>{
+export const loginUser = (data) => {
     const obj = {
         method: "post",
         url: rootApiEP + "/users/login",
@@ -43,7 +43,7 @@ export const loginUser = (data) =>{
 }
 
 // Fetches the currently authenticated user's profile.
-export const getUser = ()=>{
+export const getUser = () => {
     const obj = {
         method: "get",
         url: rootApiEP + "/users",
@@ -57,9 +57,9 @@ export const getUser = ()=>{
 // transaction 
 
 // Creates a new transaction for the authenticated user.
-export const addNewTransaction = (tData)=>{
+export const addNewTransaction = (tData) => {
     const obj = {
-        method : "post",
+        method: "post",
         url: rootApiEP + "/transactions",
         data: tData,
         headers: {
@@ -70,13 +70,27 @@ export const addNewTransaction = (tData)=>{
 }
 
 // Retrieves all transactions belonging to the authenticated user.
-export const fetchTransaction = ()=>{
+export const fetchTransaction = () => {
     const obj = {
         method: "get",
         url: rootApiEP + "/transactions",
-        headers:{
+        headers: {
             Authorization: getAccessJwt()
         }
     }
     return apiProcessor(obj)
+}
+
+// delee the transactions
+export const deleteTransactions = (ids) => {
+    const obj = {
+        method: "delete",
+        url: rootApiEP + "/transactions",
+        data: { ids },
+        headers: {
+            Authorization: getAccessJwt()
+        }
+    }
+    return apiProcessor(obj)
+
 }

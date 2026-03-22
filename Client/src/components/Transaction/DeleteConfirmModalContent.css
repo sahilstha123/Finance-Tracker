@@ -1,0 +1,88 @@
+.delete-modal-container {
+    padding: 1rem;
+}
+
+.delete-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.delete-title {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #1a1a1a;
+}
+
+.delete-text {
+    color: #666;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    line-height: 1.5;
+}
+
+.delete-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn-modal {
+    padding: 0.6rem 1.5rem;
+    font-weight: 700;
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-modal:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablet and Laptop View */
+@media (min-width: 768px) {
+    .delete-modal-container {
+        padding: 2rem;
+    }
+    
+    .delete-icon {
+        font-size: 5rem;
+    }
+    
+    .delete-title {
+        font-size: 1.75rem;
+    }
+    
+    .delete-text {
+        font-size: 1.1rem;
+        padding: 0 2rem;
+    }
+}
+
+/* Mobile Specific Adjustments */
+@media (max-width: 576px) {
+    .delete-actions {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .btn-modal {
+        width: 100%;
+        padding: 0.75rem;
+    }
+    
+    .delete-icon {
+        font-size: 3.5rem;
+    }
+    
+    .delete-title {
+        font-size: 1.4rem;
+    }
+    
+    .delete-text {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+}

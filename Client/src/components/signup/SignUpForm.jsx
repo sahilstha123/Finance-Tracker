@@ -11,9 +11,10 @@ import { postNewUser } from '../../helpers/axioHelper';
 import { useForm } from '../../hooks/useForm';
 import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { useUserContext } from "../../context/userContext";
 
 const SignUpForm = () => {
+  const { isLoading, setIsLoading } = useUserContext();
   const initialState = {
     name: "",
     email: "",
@@ -22,10 +23,13 @@ const SignUpForm = () => {
   }
 
   const { form, setForm, handleOnChange } = useForm(initialState)
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  /**
+   * Handles user registration submission.
+   * Validates password match before calling the API.
+   */
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const { confirmPassword, ...rest } = form;
@@ -60,14 +64,12 @@ const SignUpForm = () => {
         })
       }
 
-    }
-    catch (error) {
+    } catch (error) {
       toast.error(error.message || "Something went wrong", {
         autoClose: 3000,
         style: { color: "red" },
         className: "toast-mobile"
       });
-      console.error(error);
     } finally {
       setIsLoading(false);
     }

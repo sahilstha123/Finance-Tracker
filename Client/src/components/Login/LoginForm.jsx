@@ -16,22 +16,25 @@ import { useLocation, useNavigate, Link } from "react-router-dom"
 
 const LoginForm = () => {
   const navigate = useNavigate()
-  const { userData, setUserData } = useUserContext()
+  const { userData, setUserData, isLoading, setIsLoading } = useUserContext()
   const initialState = {
     email: "",
     password: "",
   }
   const { form, setForm, handleOnChange } = useForm(initialState)
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const location = useLocation()
-  console.log("loginfrom", location)
+  // Determine where to redirect after successful login
   const from = location?.state?.from?.pathname || "/dashboard"
 
   useEffect(() => {
     userData?._id && navigate(from)
   }, [userData?._id, navigate, from])
 
+  /**
+   * Handles user login submission.
+   * On success, saves user data to context and tokens to localStorage.
+   */
   const handleOnsubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true);
