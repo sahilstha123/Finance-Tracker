@@ -4,6 +4,7 @@ import { userContext } from '../context/userContext'
 import Row from "react-bootstrap/esm/Row"
 import Col from "react-bootstrap/esm/Col"
 import SummaryCard from '../components/ui/SummaryCard'
+import OverviewPieChart from '../components/charts/OverviewPieChart'
 
 const Dashboard = () => {
   const { totalIncome, totalExpense, netBalance, userData } = useContext(userContext)
@@ -42,8 +43,12 @@ const Dashboard = () => {
           />
         </Col>
       </Row>
-      <Row>
-        <Col md={4}></Col>
+      <Row className='g-4 mb-5'>
+        <Col lg={4} md={12}>
+          <div className="chart-card">
+            <OverviewPieChart />
+          </div>
+        </Col>
         <Col md={4}></Col>
         <Col md={4}></Col>
       </Row>
