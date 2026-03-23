@@ -11,8 +11,12 @@ const Dashboard = () => {
   return (
     <Container className="py-5">
       <div className="dashboard-header mb-5 text-center">
-        <h1 className="fw-bold mb-2">Welcome back, {userData?.name || 'User'}! 👋</h1>
-        <p className="text-muted fs-5">Here's a quick overview of your finances.</p>
+        <h1 className="fw-bold mb-2" style={{
+          color: "#14532D"
+        }}>Welcome back, {userData?.name || 'User'}! </h1>
+        <p className="text-muted fs-5" style={{
+          color: "#198754"
+        }}>Here's a quick overview of your finances.</p>
       </div>
 
       <Row className="mb-4 g-4 justify-content-center">
@@ -37,6 +41,11 @@ const Dashboard = () => {
             variant="balance"
           />
         </Col>
+      </Row>
+      <Row>
+        <Col md={4}></Col>
+        <Col md={4}></Col>
+        <Col md={4}></Col>
       </Row>
     </Container>
   )
