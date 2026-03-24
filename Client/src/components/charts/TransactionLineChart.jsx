@@ -22,13 +22,15 @@ const TransactionLineChart = ({type="income"}) => {
         acc[date]+= Number(curr.amount);
         return acc
     },{})
+    
     const data = Object.keys(groupData).map((date)=>({
         date,
         amount: groupData[date]
     }))
+    const color = type === "income" ? "#2ecc71": "#e74c3c"
+    const title = type === "income" ? "Income Trend" : "Expense Trend"
   return (
     <div>TransactionLineChart</div>
   )
 }
-
 export default TransactionLineChart
