@@ -8,7 +8,7 @@ const OverviewPieChart = () => {
     { name: "Income", value: totalIncome },
     { name: "Expense", value: totalExpense }
   ]
-  const total = data.reduce((acc,curr)=> acc + curr.value, 0)
+  const total = data.reduce((acc, curr) => acc + curr.value, 0)
   if (transactions.length === 0) {
     return (
       <div className="d-flex align-items-center justify-content-center">
@@ -31,24 +31,25 @@ const OverviewPieChart = () => {
             outerRadius={100}
             stroke='none'
           >
-            {data.map((entry,index)=>(
-              <Cell key={`cell-${index}`} fill={colors[index%colors.length]}/>
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
             ))}
           </Pie>
           <Tooltip
-          contentStyle={{
-            borderRadius: "12px",
-            border: "none",
-            padding:"10px"
-          }}
-          
-          formatter={(value,name) => [`Rs. ${value.toLocaleString()} 
-            (${((value/total)*100).toFixed(1)}%)`,name]}
+            contentStyle={{
+              borderRadius: "12px",
+              border: "none",
+              padding: "10px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
+            }}
+
+            formatter={(value, name) => [`Rs. ${value.toLocaleString()} 
+            (${((value / total) * 100).toFixed(1)}%)`, name]}
           />
           <Legend
-          verticalAlign='bottom'
-          height={36}
-          iconType='circle'
+            verticalAlign='bottom'
+            height={36}
+            iconType='circle'
           />
         </PieChart>
       </ResponsiveContainer>

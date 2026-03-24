@@ -8,10 +8,10 @@ import OverviewPieChart from '../components/charts/OverviewPieChart'
 import TransactionLineChart from '../components/charts/TransactionLineChart'
 
 const Dashboard = () => {
-  const { totalIncome, totalExpense, netBalance, userData,getTransactions } = useContext(userContext)
-  useEffect(()=>{
+  const { totalIncome, totalExpense, netBalance, userData, getTransactions } = useContext(userContext)
+  useEffect(() => {
     getTransactions()
-  },[])
+  }, [])
   return (
     <Container className="py-5">
       <div className="dashboard-header mb-5 text-center">
@@ -52,8 +52,8 @@ const Dashboard = () => {
             <OverviewPieChart />
           </div>
         </Col>
-        <Col md={4}><TransactionLineChart/></Col>
-        <Col md={4}></Col>
+        <Col md={4}><TransactionLineChart /></Col>
+        <Col md={4}><TransactionLineChart type='expense'/></Col>
       </Row>
     </Container>
   )
