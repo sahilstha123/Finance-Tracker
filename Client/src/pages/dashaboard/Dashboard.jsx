@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import Container from 'react-bootstrap/esm/Container'
-import { userContext } from '../../context/userContext'
+import { useUserContext } from '../../context/userContext'
 import Row from "react-bootstrap/esm/Row"
 import Col from "react-bootstrap/esm/Col"
 import SummaryCard from '../../components/ui/SummaryCard'
@@ -8,7 +8,7 @@ import OverviewPieChart from '../../components/charts/OverviewPieChart'
 import TransactionLineChart from '../../components/charts/TransactionLineChart'
 import "./Dashboard.css"
 const Dashboard = () => {
-  const { totalIncome, totalExpense, netBalance, userData, getTransactions } = useContext(userContext)
+  const { totalIncome, totalExpense, netBalance, userData, getTransactions,transactions } = useUserContext()
   useEffect(() => {
     getTransactions()
   }, [])
@@ -24,6 +24,8 @@ const Dashboard = () => {
           }}>Here's a quick overview of your finances.</p>
         </div>
 
+{transactions.length>0 ? (
+          <>
         <Row className="mb-4 g-4 justify-content-center">
           <Col lg={4} md={6}>
             <SummaryCard
@@ -46,7 +48,10 @@ const Dashboard = () => {
               variant="balance"
             />
           </Col>
+          
         </Row>
+        
+        
         <Row className='g-4 mb-5'>
           <Col lg={4} md={12}>
             <div className="chart-card">
@@ -64,6 +69,12 @@ const Dashboard = () => {
             </div>
           </Col>
         </Row>
+        </>)
+        : (
+          <p className='text-center text-muted fs-3'> No transactions Found</p>
+        )
+      }
+
       </Container>
     </div>
 

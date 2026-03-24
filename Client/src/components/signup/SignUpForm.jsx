@@ -12,9 +12,11 @@ import { useForm } from '../../hooks/useForm';
 import { BsCheckCircleFill, BsExclamationTriangleFill } from "react-icons/bs";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useUserContext } from "../../context/userContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
   const { isLoading, setIsLoading } = useUserContext();
+  const navigate = useNavigate()
   const initialState = {
     name: "",
     email: "",
@@ -54,6 +56,7 @@ const SignUpForm = () => {
           icon: <BsCheckCircleFill className="text-success" />
         })
         setForm(initialState)
+        setTimeout(()=>navigate("/"),2000)
       }
       else {
         toast.error(message || "something went wrong", {
