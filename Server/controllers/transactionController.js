@@ -30,7 +30,7 @@ exports.deleteData = async (req, res) => {
     const { ids } = req.body
     const { _id } = req.userInfo
 
-    if (!ids || !Array.isArray(ids || ids.length === 0)) {
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
         return res.status(400).json({
             status: "error",
             message: "ids array is required"

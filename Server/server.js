@@ -1,5 +1,4 @@
 const express = require("express")
-const errorHandler = require("./middleware/errorMiddleware")
 
 // import route models
 const userRouter = require("./routers/userRouter")
@@ -13,6 +12,8 @@ app.use(cors())
 // database connection
 const connectDB = require("./config/dbconfig")
 const { auth } = require("./middleware/authMiddleware")
+const errorHandlerMiddleware = require("./middleware/errorMiddleware")
+const apiError = require("./utils/apiError")
 const PORT = process.env.PORT || 8000
 connectDB()
 
@@ -26,8 +27,12 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/transactions", auth, transactionRouter)
 
+// 404 not found
+app.use((req,res,next)=>{
+     throw new apiError("Not found", 404)
+})
 // global error handling middle ware 
-app.use(errorHandler)
+app.use(errorHandlerMiddleware)
 app.listen(PORT, (error) => {
     error ? console.log(error) :
         console.log("Server is running on port 8000")
