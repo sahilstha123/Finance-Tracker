@@ -8,13 +8,13 @@ import { Routes, Route, useLocation } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import SignUp from './pages/SignUp';
 import DefaultLayout from './components/Layout/DefaultLayout';
-import Dashboard from './pages/Dashboard';
 import Transaction from './pages/Transaction';
 import Auth from './auth/Auth';
 import NotFound from './pages/NotFound';
 import { useUserContext } from './context/userContext';
 import { autoLogin } from './utils/users';
 import SplashScreen from './components/common/SplashScreen';
+import Dashboard from './pages/dashaboard/Dashboard';
 
 function App() {
   const { userData, setUserData, appLoading, setAppLoading } = useUserContext()
