@@ -56,7 +56,7 @@ const SignUpForm = () => {
           icon: <BsCheckCircleFill className="text-success" />
         })
         setForm(initialState)
-        setTimeout(()=>navigate("/"),2000)
+        setTimeout(() => navigate("/"), 2000)
       }
       else {
         toast.error(message || "something went wrong", {
