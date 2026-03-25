@@ -28,8 +28,8 @@ app.use("/api/v1/users", userRouter)
 app.use("/api/v1/transactions", auth, transactionRouter)
 
 // 404 not found
-app.use((req,res,next)=>{
-     throw new apiError("Not found", 404)
+app.use((req, res, next) => {
+    throw new apiError("Not found", 404)
 })
 // global error handling middle ware 
 app.use(errorHandlerMiddleware)
