@@ -1,5 +1,5 @@
 import axios from "axios"
-const rootApiEP = import.meta.env.VITE_API_BASE_URl
+const rootApiEP = import.meta.env.VITE_API_BASE_URl + "/api/v1"
 
 const getAccessJwt = () => {
     return localStorage.getItem("JwtToken")
