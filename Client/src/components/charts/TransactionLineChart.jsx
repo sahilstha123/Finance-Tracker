@@ -61,7 +61,7 @@ const TransactionLineChart = ({ type = "income" }) => {
                         axisLine={false}
                         tickLine={false}
                         tick={{ fontSize: 10, fill: "#222" }}
-                        width={60}
+                        width={40}
                         tickFormatter={(value) => `Rs.${value}`}
                     />
                     <Tooltip
