@@ -36,7 +36,7 @@ const SignUpForm = () => {
     e.preventDefault();
     const { confirmPassword, ...rest } = form;
     if (confirmPassword !== form.password) {
-      return toast.error("Popwords do not match", {
+      return toast.error("Passwords do not match", {
         autoClose: 3000,
         style: { color: "red" },
         className: "toast-mobile"
